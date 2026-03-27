@@ -1,0 +1,33 @@
+<nav [class.scrolled]="isScrolled()" [class.glass]="isScrolled()" class="navbar">
+  <div class="container nav-content">
+    <div class="logo" (click)="scrollToSection('#hero')">
+      <lucide-icon [name]="PointerIcon" class="logo-icon"></lucide-icon>
+      <span class="logo-text">NAIVEDH<span class="text-gradient">.PATEL</span></span>
+    </div>
+
+    <!-- Desktop Nav -->
+    <ul class="nav-links">
+      <li *ngFor="let link of navLinks">
+        <a (click)="scrollToSection(link.href)" class="nav-link">{{ link.name }}</a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="https://github.com/naivedhP2518" target="_blank" class="social-icon">
+        <lucide-icon [name]="GithubIcon"></lucide-icon>
+      </a>
+      <button class="mobile-toggle" (click)="toggleMenu()">
+        <lucide-icon [name]="isMenuOpen() ? XIcon : MenuIcon"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.open]="isMenuOpen()">
+    <ul class="mobile-nav-links">
+      <li *ngFor="let link of navLinks">
+        <a (click)="scrollToSection(link.href)" class="mobile-nav-link">{{ link.name }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>

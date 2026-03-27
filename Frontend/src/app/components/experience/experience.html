@@ -1,0 +1,49 @@
+<section id="experience" class="experience-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <h4 class="section-tag">Career Journey</h4>
+      <h2 class="section-title">My <span class="text-gradient">Experience</span></h2>
+    </div>
+
+    <div class="timeline">
+      <div *ngFor="let exp of experiences; let i = index" class="timeline-item">
+        <div class="timeline-dot-container">
+          <div class="timeline-dot"></div>
+          <div *ngIf="i !== experiences.length - 1" class="timeline-line"></div>
+        </div>
+
+        <div class="timeline-content">
+          <div class="exp-card glass">
+            <div class="exp-header">
+              <div class="role-group">
+                <lucide-icon [name]="BriefcaseIcon" size="18" class="icon"></lucide-icon>
+                <h3>{{ exp.role }}</h3>
+              </div>
+              <div class="duration-badge">
+                <lucide-icon [name]="CalendarIcon" size="14"></lucide-icon>
+                <span>{{ exp.duration }}</span>
+              </div>
+            </div>
+
+            <div class="exp-company">
+              <div class="company-name">{{ exp.company }}</div>
+              <div class="location">
+                <lucide-icon [name]="MapIcon" size="14"></lucide-icon>
+                <span>{{ exp.location }}</span>
+              </div>
+            </div>
+
+            <p class="exp-desc">{{ exp.description }}</p>
+
+            <ul class="highlights">
+              <li *ngFor="let high of exp.highlights" class="highlight-item">
+                <span class="bullet"></span>
+                <span>{{ high }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

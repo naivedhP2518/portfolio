@@ -1,0 +1,21 @@
+<div class="loader-overlay">
+  <div class="loader-square">
+    <!-- Border Progress SVG -->
+    <svg class="loader-svg" viewBox="0 0 100 100">
+      <rect x="2" y="2" width="96" height="96" class="border-bg" fill="none" stroke-width="1"/>
+      <rect x="2" y="2" width="96" height="96" class="border-fill" fill="none" 
+            stroke-width="2" 
+            [style.stroke-dasharray]="384"
+            [style.stroke-dashoffset]="384 - (384 * percent / 100)"/>
+    </svg>
+
+    <div class="loader-square-content">
+      <div class="loader-name">
+        <span class="first-name">NAIVEDH</span>
+        <span class="last-name">PATEL</span>
+      </div>
+      <div class="loader-percent">{{ percent | number:'1.0-0' }}%</div>
+      <div class="loader-motto">PROJECTS</div>
+    </div>
+  </div>
+</div>

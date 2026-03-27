@@ -1,0 +1,42 @@
+<section #aboutSection id="about" class="about-section section-padding">
+  <div class="container">
+    <div class="about-grid">
+      <div #aboutImage class="about-image-container">
+        <div class="image-reveal">
+          <img *ngIf="profileImage" [src]="profileImage" alt="Naivedh Patel" class="profile-image">
+          <div *ngIf="!profileImage" class="image-placeholder glass">
+            <lucide-icon [name]="UserIcon" size="64" class="placeholder-icon"></lucide-icon>
+          </div>
+          <div #badge class="experience-badge glass">
+            <span class="count">3+</span>
+            <span class="label">Years of<br>Exp.</span>
+          </div>
+        </div>
+      </div>
+
+      <div #aboutContent class="about-content">
+        <h4 class="section-tag">About Me</h4>
+        <h2 class="section-title">Building Modern Web & <span class="text-gradient">Visual Content</span></h2>
+        <p class="about-text">
+          I'm Naivedh Patel, a Vadodara-based Web Developer and Modern Video Editor. My passion lies in building clean, responsive, and user-friendly applications. I specialize in modern UI/UX design, problem-solving, and developing dynamic web platforms using modern technologies.
+        </p>
+        <p class="about-text">
+          I also create high-quality digital content and professional video edits for YouTube and Instagram, combining creativity with technical expertise to deliver impactful results. Always eager to learn, grow, and take on new challenges.
+        </p>
+
+        <!-- Features Details -->
+        <div class="features-grid">
+          <div *ngFor="let feature of features" class="feature-card glass">
+            <div class="feature-icon-box">
+              <lucide-icon [name]="feature.icon" size="24"></lucide-icon>
+            </div>
+            <div class="feature-info">
+              <h3>{{ feature.title }}</h3>
+              <p>{{ feature.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

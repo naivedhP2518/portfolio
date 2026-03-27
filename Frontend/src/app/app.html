@@ -1,0 +1,5 @@
+<app-loader *ngIf="!isAppReady" (loaded)="onLoaderComplete()"></app-loader>
+
+<div class="app-container" [class.ready]="isAppReady">
+  <router-outlet></router-outlet>
+</div>
