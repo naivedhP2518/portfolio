@@ -1,11 +1,12 @@
-# 🚀 Naivedh Patel | Portfolio
+#  Naivedh Patel | Portfolio
 
 <div align="center">
-  <img src="Frontend/src/assets/Naivedh.png" alt="Naivedh Patel" width="200" style="border-radius: 50%"/>
   <h3>Full-Stack Developer | Video Editor | UI/UX Designer</h3>
-  
-  [![Website](https://img.shields.io/badge/Website-Live-brightgreen)](https://github.com/naivedhP2518/portfolio)
-  [![Tech Stack](https://img.shields.io/badge/Tech-Angular%20%7C%20GSAP%20%7C%20Three.js-blue)]()
+
+[![Website](https://img.shields.io/badge/Website-Live-brightgreen?style=for-the-badge&logo=google-chrome&logoColor=white)](https://github.com/naivedhP2518/portfolio)
+[![Angular](https://img.shields.io/badge/Angular-Framework-DD0031?style=for-the-badge&logo=angular&logoColor=white)]()
+[![GSAP](https://img.shields.io/badge/GSAP-Animation-88CE02?style=for-the-badge&logo=greensock&logoColor=black)]()
+[![Three.js](https://img.shields.io/badge/Three.js-3D-000000?style=for-the-badge&logo=three.js&logoColor=white)]()
 </div>
 
 ---
