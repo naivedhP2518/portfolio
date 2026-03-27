@@ -66,14 +66,6 @@ This repository is organized into a clean, scalable structure:
 
 ---
 
-## ✨ Features
-- **Modern Animations**: Smooth entrance and scroll-triggered animations using GSAP.
-- **Responsive Design**: Fully optimized for all device sizes.
-- **Premium Loading System**: Synchronized loader for a seamless first impression.
-- **Interactive UI**: Dynamic components with professional SVG iconography.
-
----
-
 <div align="center">
   Developed with ❤️ by <b>Naivedh Patel</b>
 </div>
