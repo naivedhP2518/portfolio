@@ -21,8 +21,8 @@ export class Projects {
       description: 'Developed a modern hotel booking interface with premium UI design, smooth animations, and responsive layout.',
       image: 'assets/hotel-web.png',
       tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
-      link: '#',
-      github: 'https://github.com/naivedhP2518'
+      link: 'https://the-grand-oasis-resort.vercel.app',
+      github: 'https://github.com/naivedhP2518/The-Grand-Oasis-Resort'
     },
     {
       title: 'Rental Website',
@@ -47,7 +47,7 @@ export class Projects {
       category: 'Frontend & Backend',
       description: 'Including UI-based apps, tools, and mini web applications showcasing various developer skills.',
       image: 'assets/More-Projects.png',
-      tools: ['HTML', 'CSS', 'JavaScript', 'React'],
+      tools: ['HTML', 'CSS', 'JavaScript'],
       link: '#',
       github: 'https://github.com/naivedhP2518?tab=repositories'
     }
