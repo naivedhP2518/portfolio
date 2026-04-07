@@ -2,8 +2,7 @@
 
 <div align="center">
   <h3>Full-Stack Developer | Video Editor | UI/UX Designer</h3>
-  
-  **Live Link:** [https://portfolio-beta-five-50.vercel.app/](https://portfolio-beta-five-50.vercel.app/)
+
 
 [![Website](https://img.shields.io/badge/Website-Live-brightgreen?style=for-the-badge&logo=google-chrome&logoColor=white)](https://portfolio-beta-five-50.vercel.app/)
 [![Angular](https://img.shields.io/badge/Angular-Framework-DD0031?style=for-the-badge&logo=angular&logoColor=white)]()
