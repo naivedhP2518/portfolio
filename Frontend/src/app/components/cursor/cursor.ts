@@ -43,14 +43,14 @@ export class Cursor implements AfterViewInit {
     });
 
     // Handle Hover states
-    const interactives = document.querySelectorAll('a, button, .logo, .info-card, .feature-card, .project-card');
+    const interactives = document.querySelectorAll('a, button, .logo, .info-card, .feature-card, .project-card, .skill-category, .timeline-item');
     
     interactives.forEach(el => {
       el.addEventListener('mouseenter', () => {
         gsap.to(this.outline.nativeElement, {
           scale: 2,
-          backgroundColor: 'rgba(108, 99, 255, 0.1)',
-          borderColor: 'rgba(108, 99, 255, 0.5)',
+          backgroundColor: 'rgba(244, 208, 111, 0.05)',
+          borderColor: 'rgba(244, 208, 111, 0.6)',
           duration: 0.3
         });
         gsap.to(this.dot.nativeElement, {
@@ -63,7 +63,7 @@ export class Cursor implements AfterViewInit {
         gsap.to(this.outline.nativeElement, {
           scale: 1,
           backgroundColor: 'transparent',
-          borderColor: 'rgba(108, 99, 255, 0.3)',
+          borderColor: 'rgba(244, 208, 111, 0.3)',
           duration: 0.3
         });
         gsap.to(this.dot.nativeElement, {

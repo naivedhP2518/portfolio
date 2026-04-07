@@ -16,7 +16,7 @@
               <span class="skill-percentage">{{ skill.level }}%</span>
             </div>
             <div class="skill-bar-bg">
-              <div class="skill-bar-fill" [style.width.%]="skill.level"></div>
+              <div class="skill-bar-fill" [attr.data-level]="skill.level"></div>
             </div>
           </div>
         </div>

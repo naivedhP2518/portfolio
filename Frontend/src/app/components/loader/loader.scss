@@ -1,7 +1,7 @@
 .loader-overlay {
   position: fixed;
   inset: 0;
-  background-color: #050505;
+  background-color: var(--bg-color);
   z-index: 99999;
   display: flex;
   justify-content: center;
@@ -16,10 +16,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
 
   @media (max-width: 480px) {
     width: 260px;
@@ -36,11 +36,11 @@
   pointer-events: none;
 
   .border-bg {
-    stroke: rgba(255, 255, 255, 0.05);
+    stroke: rgba(0, 0, 0, 0.05);
   }
 
   .border-fill {
-    stroke: var(--accent-color, #6c63ff);
+    stroke: var(--accent-color);
     stroke-linecap: square;
     transition: stroke-dashoffset 0.1s linear;
   }
@@ -57,13 +57,13 @@
 .loader-name {
   display: flex;
   flex-direction: column;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   
   .first-name {
     font-size: 2.5rem;
-    font-weight: 900;
+    font-weight: 800;
     letter-spacing: 0.2rem;
-    color: #ffffff;
+    color: var(--text-color);
     line-height: 1;
   }
   
@@ -71,23 +71,23 @@
     font-size: 2.5rem;
     font-weight: 300;
     letter-spacing: 0.5rem;
-    color: var(--accent-color, #6c63ff);
+    color: var(--tertiary-color);
     margin-top: -5px;
   }
 }
 
 .loader-percent {
   font-size: 1.5rem;
-  font-weight: 200;
-  color: #ffffff;
-  opacity: 0.8;
+  font-weight: 400;
+  color: var(--text-color);
+  opacity: 0.9;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .loader-motto {
   font-size: 0.7rem;
   letter-spacing: 0.4rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-muted);
   text-transform: uppercase;
   margin-top: 1rem;
 }

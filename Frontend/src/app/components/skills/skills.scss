@@ -12,10 +12,12 @@
   padding: 2.5rem;
   border-radius: 20px;
   transition: var(--transition-smooth);
+  border: 1px solid var(--glass-border);
 
   &:hover {
     border-color: var(--accent-color);
-    background: rgba(108, 99, 255, 0.02);
+    background: rgba(244, 208, 111, 0.05); /* Soft gold tint */
+    transform: translateY(-8px);
   }
 }
 
@@ -77,5 +79,4 @@
   height: 100%;
   background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
   border-radius: 10px;
-  transition: width 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }

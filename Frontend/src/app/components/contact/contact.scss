@@ -40,17 +40,19 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
   transition: var(--transition-smooth);
   text-decoration: none;
   color: inherit;
 
   &:hover {
     transform: translateX(10px);
-    border-color: var(--accent-color);
-    background: rgba(108, 99, 255, 0.05);
+    border-color: var(--tertiary-color);
+    background: rgba(244, 208, 111, 0.05);
 
     .icon-box {
-      background: var(--accent-color);
+      background: var(--tertiary-color);
       color: white;
     }
   }
@@ -58,12 +60,12 @@
   .icon-box {
     width: 50px;
     height: 50px;
-    background: rgba(108, 99, 255, 0.1);
+    background: rgba(244, 208, 111, 0.1);
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--accent-color);
+    color: var(--tertiary-color);
     transition: var(--transition-smooth);
     flex-shrink: 0;
   }
@@ -81,8 +83,9 @@
     }
 
     .value {
-      font-weight: 600;
+      font-weight: 700;
       font-size: 1.1rem;
+      color: var(--text-color);
     }
   }
 }
@@ -95,7 +98,9 @@
   border-radius: 50px;
   width: fit-content;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
+  background: rgba(0, 255, 136, 0.05);
+  color: #00a85a;
 
   .status-dot-container {
     width: 12px;
@@ -106,7 +111,7 @@
   .status-dot {
     width: 100%;
     height: 100%;
-    background: #00ff88;
+    background: #00c86e;
     border-radius: 50%;
     
     &:after {
@@ -114,7 +119,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: #00ff88;
+      background: #00c86e;
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
@@ -130,6 +135,9 @@
 .contact-form-container {
   padding: 3rem;
   border-radius: 25px;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
 
   @media (max-width: 640px) {
     padding: 2rem;
@@ -149,14 +157,14 @@
 
   label {
     font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-muted);
+    font-weight: 600;
+    color: var(--text-color);
   }
 
   input, textarea {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: var(--text-color);
     padding: 1rem 1.25rem;
     border-radius: 12px;
     font-family: inherit;
@@ -166,8 +174,11 @@
     &:focus {
       outline: none;
       border-color: var(--accent-color);
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 15px rgba(108, 99, 255, 0.1);
+      box-shadow: 0 0 15px rgba(244, 208, 111, 0.2);
+    }
+
+    &::placeholder {
+      color: #a0aec0;
     }
   }
 }
@@ -195,15 +206,15 @@
   animation: fadeIn 0.3s ease-out;
 
   &.success-feedback {
-    background: rgba(0, 255, 136, 0.05);
-    border: 1px solid rgba(0, 255, 136, 0.2);
-    color: #00ff88;
+    background: rgba(0, 200, 110, 0.05);
+    border: 1px solid rgba(0, 200, 110, 0.2);
+    color: #007a43;
   }
 
   &.error-feedback {
     background: rgba(255, 59, 48, 0.05);
     border: 1px solid rgba(255, 59, 48, 0.2);
-    color: #ff3b30;
+    color: #cc2b24;
   }
 
   .feedback-text {
@@ -237,7 +248,7 @@
 .footer {
   margin-top: 100px;
   padding: 4rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .footer-content {
@@ -254,7 +265,7 @@
     gap: 2rem;
 
     a:hover {
-      color: var(--text-color);
+      color: var(--accent-color);
     }
   }
 }

@@ -7,7 +7,7 @@
     <br>
 
     <div class="projects-grid">
-      <div *ngFor="let project of projects" class="project-card glass">
+      <div *ngFor="let project of projects" class="project-card glass" #projectCard>
         <div class="project-image-wrapper">
           <img *ngIf="project.image" [src]="project.image" [alt]="project.title" class="project-image">
           <div *ngIf="!project.image" class="image-placeholder">

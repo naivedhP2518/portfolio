@@ -8,6 +8,7 @@ import { Projects } from '../../components/projects/projects';
 import { Skills } from '../../components/skills/skills';
 import { Portfolio } from '../../components/portfolio/portfolio';
 import { Contact } from '../../components/contact/contact';
+import { Signature } from '../../components/signature/signature';
 
 import { Cursor } from '../../components/cursor/cursor';
 
@@ -23,6 +24,7 @@ import { Cursor } from '../../components/cursor/cursor';
     Projects,
     Skills,
     Portfolio,
+    Signature,
     Contact,
     Cursor
   ],

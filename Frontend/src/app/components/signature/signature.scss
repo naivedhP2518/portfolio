@@ -1,0 +1,37 @@
+.signature-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  overflow: hidden;
+  padding: 100px 0;
+}
+
+.signature-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.signature-wrapper {
+  max-width: 600px;
+  width: 90%;
+  aspect-ratio: 948 / 376;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signature-svg {
+  width: 100%;
+  height: auto;
+}
+
+.sig-path {
+  stroke: var(--accent-color);
+  stroke-width: 8px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0; /* Hidden initially, GSAP will handle showing and animating */
+}
