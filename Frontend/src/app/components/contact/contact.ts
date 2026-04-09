@@ -46,7 +46,7 @@ export class Contact {
       icon: this.MapIcon,
       label: 'Location',
       value: 'Nandanvan Society, Vadodara',
-      link: '#'
+      link: 'https://maps.app.goo.gl/rQ3MCA8PQb7Neswt7'
     }
   ];
 

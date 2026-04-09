@@ -20,8 +20,8 @@ export class Skills implements AfterViewInit {
     {
       name: 'Frontend & Design',
       skills: [
-        { name: 'HTML / CSS', level: 95 },
-        { name: 'JavaScript', level: 90 },
+        { name: 'HTML / CSS / JS', level: 95 },
+        { name: 'Angular', level: 98 },
         { name: 'React', level: 85 },
         { name: 'UI/UX Design', level: 88 }
       ]
