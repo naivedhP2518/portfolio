@@ -80,10 +80,10 @@ export class Portfolio {
   }
 
   galleryItems = [
-    { title: 'Hotel Website UI', category: 'Web Design', size: 'large', image: 'assets/hotel-web.png' },
+    { title: 'Lyrics Based Editing', category: 'Editing', size: 'large', image: 'assets/CoverPage.png', video: 'assets/SojaZara.mp4'},
     { title: 'Rental Platform', category: 'Full Stack', size: 'small', image: 'assets/Rental-web.png' },
     { title: 'Chat Interface', category: 'Real-time', size: 'medium', image: 'assets/Chat-Web.png' },
-    { title: 'Portfolio Design', category: 'UI/UX', size: 'medium', image: 'assets/Portfolio-img.png' },
+    { title: 'Meme Based Video', category: 'Comedy', size: 'medium', image: 'assets/CoverPage1.jpg', video: 'assets/MemeBaseVideo.mp4' },
     { title: 'Video Motion Graphic', category: 'Creative', size: 'large', image: 'assets/Dwarka-img.png', video: 'assets/Dwarka.mp4' },
     { title: 'Mini Web App', category: 'Frontend', size: 'small', image: 'assets/More-Projects.png' }
   ];

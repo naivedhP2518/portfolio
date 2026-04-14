@@ -42,3 +42,7 @@
 # System files
 .DS_Store
 Thumbs.db
+
+# Large video files
+Frontend/public/assets/MemeBaseVideo.mp4
+*.mp4
