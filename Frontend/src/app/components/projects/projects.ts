@@ -48,7 +48,7 @@ export class Projects implements AfterViewInit {
       description: 'Created a real-time chat application using Socket.IO with instant messaging and dynamic updates.',
       image: 'assets/Chat-Web.png',
       tools: ['Socket.io', 'Node.js', 'Express', 'Angular'],
-      link: '#',
+      link: 'https://naivedhp2518.github.io/Under-Maintenance/',
       github: 'https://github.com/naivedhP2518/Chat-Web'
     },
     {
