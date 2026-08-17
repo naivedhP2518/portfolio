@@ -1,0 +1,44 @@
+<section id="skills" class="skills-section section-padding">
+  <div class="container">
+    <div class="section-header text-center">
+      <h4 class="section-tag">Technical Proficiency</h4>
+      <h2 class="section-title">Skills & <span class="text-gradient">Professional Toolkit</span></h2>
+    </div>
+
+    <div class="marquee-container">
+
+      <!-- Languages & Technical Skills -->
+      <div class="marquee-row-wrapper">
+        <div class="row-header">
+          <h3 class="row-title">Languages & Technical Skills</h3>
+        </div>
+
+        <div class="marquee-wrapper fade-edges">
+          <div class="marquee-track track-left">
+            <div *ngFor="let item of technicalTrack" class="marquee-card glass">
+              <span class="card-category">{{ item.category }}</span>
+              <h4 class="card-title">{{ item.name }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Tools & Software -->
+      <div class="marquee-row-wrapper">
+        <div class="row-header">
+          <h3 class="row-title">Professional Tools & Software</h3>
+        </div>
+
+        <div class="marquee-wrapper fade-edges">
+          <div class="marquee-track track-right">
+            <div *ngFor="let item of toolsTrack" class="marquee-card glass gold-accent">
+              <span class="card-category gold-tag">{{ item.category }}</span>
+              <h4 class="card-title">{{ item.name }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

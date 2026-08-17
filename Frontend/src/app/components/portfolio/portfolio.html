@@ -1,0 +1,94 @@
+<section id="portfolio" class="portfolio-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <h4 class="section-tag">Project Gallery</h4>
+      <h2 class="section-title">Web & <span class="text-gradient">Content Showcase</span></h2>
+    </div>
+<br><br>
+    <div class="masonry-grid">
+      <div *ngFor="let item of galleryItems" class="masonry-item" [class]="item.size">
+        <div class="gallery-card glass">
+          <!-- Media Thumbnail (Prioritize Image for Grid) -->
+          <img *ngIf="item.image" [src]="item.image" [alt]="item.title" class="gallery-media">
+          
+          <!-- Show Video only if NO Image is provided (as fallback) -->
+          <video *ngIf="!item.image && item.video" [src]="item.video" class="gallery-media" muted playsinline></video>
+
+          <div *ngIf="!item.image && !item.video" class="gallery-placeholder">
+            <lucide-icon [name]="SearchIcon" size="32" class="icon-search"></lucide-icon>
+          </div>
+          
+          <div class="gallery-overlay">
+            <div class="item-info">
+              <h3>{{ item.title }}</h3>
+              <span class="item-category">{{ item.category }}</span>
+            </div>
+            <button class="expand-btn" (click)="item.video ? openModal(item.video, 'video') : openModal(item.image!, 'image')">
+              <lucide-icon [name]="item.video ? VideoIcon : MaximizeIcon" size="18"></lucide-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="gallery-modal" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeModal()">
+        <lucide-icon [name]="CloseIcon" size="24"></lucide-icon>
+      </button>
+      
+      <div class="modal-media-container">
+        <!-- Modal Image -->
+        <img *ngIf="selectedMedia?.type === 'image'" [src]="selectedMedia?.url" alt="Gallery Image" class="modal-media">
+        
+        <!-- Modal Video with Custom Controls -->
+        <div *ngIf="selectedMedia?.type === 'video'" class="custom-player">
+          <video #videoPlayer
+            [src]="selectedMedia?.url" 
+            class="modal-media" 
+            autoplay 
+            [muted]="isMuted"
+            playsinline
+            (timeupdate)="onTimeUpdate(videoPlayer)"
+            (loadedmetadata)="onLoadedMetadata(videoPlayer)"
+            (click)="togglePlay(videoPlayer)">
+          </video>
+
+          <!-- Custom UI Overlay -->
+          <div class="player-controls glass" (click)="$event.stopPropagation()">
+            <div class="progress-container">
+              <input type="range" 
+                class="progress-bar"
+                [value]="currentTime" 
+                [max]="duration" 
+                (input)="seek($any($event.target).value, videoPlayer)">
+              <div class="progress-fill" [style.width.%]="(currentTime / duration) * 100"></div>
+            </div>
+
+            <div class="controls-main">
+              <div class="controls-left">
+                <button class="control-btn" (click)="togglePlay(videoPlayer)">
+                  <lucide-icon [name]="isPlaying ? PauseIcon : PlayIcon" size="20"></lucide-icon>
+                </button>
+                <div class="time-display">
+                  {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+                </div>
+              </div>
+
+              <div class="controls-right">
+                <button class="control-btn" (click)="toggleMute(videoPlayer)">
+                  <lucide-icon [name]="isMuted ? MuteIcon : VolumeIcon" size="20"></lucide-icon>
+                </button>
+                <button class="control-btn" (click)="videoPlayer.requestFullscreen()">
+                  <lucide-icon [name]="MaximizeIcon" size="20"></lucide-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

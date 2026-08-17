@@ -1,0 +1,43 @@
+<section id="hero" class="hero-section">
+  <div #heroBg class="hero-bg-mesh"></div>
+  
+  <div class="container hero-container">
+    <div #heroContent class="hero-content">
+      <h4 class="hero-greeting">Hello, I am</h4>
+      <h1 class="hero-title">
+        <span class="char">N</span><span class="char">a</span><span class="char">i</span><span class="char">v</span><span class="char">e</span><span class="char">d</span><span class="char">h</span> <span class="char">P</span><span class="char">a</span><span class="char">t</span><span class="char">e</span><span class="char">l</span>
+      </h1>
+      <h2 class="hero-subtitle">
+        <span class="text-gradient">Web Developer</span> | Modern Video Editor
+      </h2>
+      <p class="hero-tagline">
+        Building Modern Web Experiences & Crafting Creative Visual Content
+      </p>
+
+      <div class="hero-cta">
+        <button class="btn btn-primary" (click)="scrollToProjects()">View My Work</button>
+        <button class="btn btn-outline" (click)="scrollToAbout()">Learn More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vertical Socials -->
+  <div class="social-vertical">
+    <a href="https://www.instagram.com/ladlijiibarsana" target="_blank" class="social-link">
+      <lucide-icon [name]="InstagramIcon"></lucide-icon>
+    </a>
+    <a href="https://youtube.com/@gj-nfpatel" target="_blank" class="social-link">
+      <lucide-icon [name]="YoutubeIcon"></lucide-icon>
+    </a>
+    <a href="mailto:naivedhpatel2518@gmail.com" class="social-link">
+      <lucide-icon [name]="MailIcon"></lucide-icon>
+    </a>
+    <div class="vertical-line"></div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator" (click)="scrollToAbout()">
+    <lucide-icon [name]="ArrowIcon" class="bounce"></lucide-icon>
+    <span>Scroll</span>
+  </div>
+</section>
