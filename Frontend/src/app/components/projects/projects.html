@@ -9,7 +9,7 @@
     <div class="projects-grid">
       <div *ngFor="let project of projects" class="project-card glass" #projectCard>
         <div class="project-image-wrapper">
-          <img *ngIf="project.image" [src]="project.image" [alt]="project.title" class="project-image">
+          <img *ngIf="project.image" [src]="resolveUrl(project.image)" [alt]="project.title" class="project-image">
           <div *ngIf="!project.image" class="image-placeholder">
             <lucide-icon [name]="EyeIcon" size="48" class="icon-eye"></lucide-icon>
           </div>

@@ -28,15 +28,20 @@ I am a passionate creator specializing in building premium digital experiences. 
 - **Animation**: GSAP (GreenSock), ScrollTrigger
 - **3D Graphics**: Three.js
 - **Icons**: Lucide Angular
-- **Tools**: Angular CLI, Prettier, Vitest
+- **Backend**: Node.js, Express, TypeScript, Mongoose (MongoDB), Nodemailer
+- **Tools**: Angular CLI, Prettier, tsx
 
 ---
 
 ## 📂 Project Structure
 This repository is organized into a clean, scalable structure:
-- **`Frontend/`**: Contains the core Angular application.
-  - `src/`: Source code, components, and assets.
-  - `package.json`: Project dependencies and scripts.
+- **`Frontend/`**: Contains the core Angular 21 application.
+  - `src/`: Source code, components, services, and assets.
+  - `package.json`: Frontend dependencies and scripts.
+- **`Backend/`**: Express + TypeScript REST API.
+  - `src/`: Controllers, models, routes, middlewares, and seeder.
+  - `.env.example`: Backend environment variable configuration.
+  - `package.json`: Backend dependencies and scripts.
 - **`README.md`**: Project overview (you are here).
 
 ---
@@ -46,24 +51,24 @@ This repository is organized into a clean, scalable structure:
 ### Prerequisites
 - Node.js (Latest LTS)
 - Angular CLI (`npm install -g @angular/cli`)
+- MongoDB (running locally or MongoDB Atlas connection string)
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/naivedhP2518/portfolio.git
-   ```
-2. Navigate to the frontend directory:
-   ```bash
-   cd portfolio/Frontend
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the development server:
-   ```bash
-   npm start
-   ```
+### 1. Backend Setup
+```bash
+cd Backend
+npm install
+cp .env.example .env
+npm run seed     # Seeds initial projects and experience
+npm run dev      # Starts server on http://localhost:5000
+```
+
+### 2. Frontend Setup
+```bash
+cd Frontend
+npm install
+npm start        # Starts Angular on http://localhost:4200
+```
+
 
 ---
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { LucideAngularModule, Mail, Phone, MapPin, Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-angular';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-contact',
@@ -20,14 +20,11 @@ export class Contact {
   readonly SuccessIcon = CheckCircle;
   readonly ErrorIcon = AlertCircle;
 
-  // Formspree Form ID
-  private formspreeUrl = 'https://formspree.io/f/xojkgojp';
-
   isSubmitting = false;
   isSuccess = false;
   isError = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: ApiService) {}
 
   contactInfo = [
     {
@@ -63,20 +60,21 @@ export class Contact {
     this.isSuccess = false;
     this.isError = false;
 
-    this.http.post(this.formspreeUrl, this.formData).subscribe({
-      next: (response) => {
+    this.apiService.submitContact(this.formData).subscribe({
+      next: () => {
         this.isSubmitting = false;
         this.isSuccess = true;
         this.formData = { name: '', email: '', message: '' };
         
         // Reset success message after 5 seconds
-        setTimeout(() => this.isSuccess = false, 5000);
+        setTimeout(() => (this.isSuccess = false), 5000);
       },
       error: (error) => {
         this.isSubmitting = false;
         this.isError = true;
-        console.error('Formspree error:', error);
+        console.error('Contact submission error:', error);
       }
     });
   }
 }
+

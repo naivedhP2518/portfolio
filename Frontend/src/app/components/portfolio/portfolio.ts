@@ -1,6 +1,7 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Maximize2, Search, Video, X, Play, Pause, Volume2, VolumeX, RotateCcw } from 'lucide-angular';
+import { ApiService, GalleryItem } from '../../services/api.service';
 
 @Component({
   selector: 'app-portfolio',
@@ -9,7 +10,7 @@ import { LucideAngularModule, Maximize2, Search, Video, X, Play, Pause, Volume2,
   templateUrl: './portfolio.html',
   styleUrl: './portfolio.scss',
 })
-export class Portfolio {
+export class Portfolio implements OnInit {
   readonly MaximizeIcon = Maximize2;
   readonly SearchIcon = Search;
   readonly CloseIcon = X;
@@ -29,6 +30,22 @@ export class Portfolio {
   currentTime = 0;
   duration = 0;
   volume = 1;
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getGallery().subscribe({
+      next: (res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          this.galleryItems = res.data;
+        }
+      },
+    });
+  }
+
+  resolveUrl(url?: string): string {
+    return this.apiService.resolveMediaUrl(url);
+  }
 
   openModal(url: string, type: 'image' | 'video') {
     this.selectedMedia = { url, type };
@@ -79,7 +96,7 @@ export class Portfolio {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
 
-  galleryItems = [
+  galleryItems: GalleryItem[] = [
     { title: 'Lyrics Based Editing', category: 'Editing', size: 'large', image: 'assets/CoverPage.png', video: 'assets/SojaZara.mp4'},
     { title: 'Rental Platform', category: 'Full Stack', size: 'small', image: 'assets/Rental-web.png' },
     { title: 'Chat Interface', category: 'Real-time', size: 'medium', image: 'assets/Chat-Web.png' },

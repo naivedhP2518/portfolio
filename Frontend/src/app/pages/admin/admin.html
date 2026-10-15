@@ -1,0 +1,581 @@
+<!-- TOAST NOTIFICATION -->
+<div class="toast-container" *ngIf="toast">
+  <div class="toast-card" [class.success]="toast.type === 'success'" [class.error]="toast.type === 'error'">
+    <lucide-icon [name]="toast.type === 'success' ? CheckCircleIcon : AlertCircleIcon" size="20"></lucide-icon>
+    <span>{{ toast.message }}</span>
+  </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- 1. AUTHENTICATION LOCK SCREEN (If not logged in)          -->
+<!-- ======================================================== -->
+<div class="auth-gate-container" *ngIf="!isAuthenticated">
+  <div class="auth-gate-card glass">
+    <div class="auth-icon-wrapper">
+      <div class="icon-halo"></div>
+      <lucide-icon [name]="LockIcon" size="36" class="lock-icon"></lucide-icon>
+    </div>
+
+    <h2 class="auth-title">Admin <span class="text-gradient">Control Portal</span></h2>
+    <p class="auth-subtitle">Restricted environment for managing portfolio projects, assets, and showcase media.</p>
+
+    <!-- Error Message -->
+    <div class="auth-error-alert" *ngIf="authError">
+      <lucide-icon [name]="AlertCircleIcon" size="18"></lucide-icon>
+      <span>{{ authError }}</span>
+    </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="login()" class="auth-form">
+      <div class="form-group">
+        <label for="adminKeyInput">Admin Secret Key</label>
+        <div class="input-with-icon">
+          <input
+            id="adminKeyInput"
+            name="adminKey"
+            [type]="showKey ? 'text' : 'password'"
+            [(ngModel)]="adminKeyInput"
+            placeholder="Enter security key..."
+            autocomplete="current-password"
+            required
+          />
+          <button type="button" class="eye-toggle-btn" (click)="toggleKeyVisibility()" title="Toggle visibility">
+            <lucide-icon [name]="showKey ? EyeOffIcon : EyeIcon" size="18"></lucide-icon>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary auth-submit-btn" [disabled]="isVerifying">
+        <lucide-icon *ngIf="!isVerifying" [name]="UnlockIcon" size="18"></lucide-icon>
+        <span *ngIf="!isVerifying">Unlock Dashboard</span>
+        <span *ngIf="isVerifying" class="loader-spinner"></span>
+        <span *ngIf="isVerifying">Authenticating...</span>
+      </button>
+
+      <div class="auth-help">
+        <small class="dev-hint">Default key from .env: <code>naivedh_portfolio_admin_secret_key_2026</code></small>
+        <a routerLink="/" class="back-link">
+          <lucide-icon [name]="ArrowLeftIcon" size="16"></lucide-icon>
+          Return to Portfolio
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- 2. ADMIN DASHBOARD (When Authenticated)                   -->
+<!-- ======================================================== -->
+<div class="admin-dashboard-container" *ngIf="isAuthenticated">
+  <!-- Top Navigation Bar -->
+  <header class="admin-navbar glass">
+    <div class="nav-left">
+      <div class="brand">
+        <span class="brand-badge">ADMIN</span>
+        <h1 class="brand-title">NAIVEDH<span class="text-gradient">.ADMIN</span></h1>
+      </div>
+      <div class="auth-status-pill">
+        <span class="status-dot pulse"></span>
+        <span>Authorized</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="admin-tabs">
+      <button
+        class="tab-btn"
+        [class.active]="activeTab === 'projects'"
+        (click)="activeTab = 'projects'"
+      >
+        <lucide-icon [name]="LayersIcon" size="18"></lucide-icon>
+        <span>Projects</span>
+        <span class="tab-count">{{ projects.length }}</span>
+      </button>
+
+      <button
+        class="tab-btn"
+        [class.active]="activeTab === 'gallery'"
+        (click)="activeTab = 'gallery'"
+      >
+        <lucide-icon [name]="SparklesIcon" size="18"></lucide-icon>
+        <span>Showcase Media</span>
+        <span class="tab-count">{{ galleryItems.length }}</span>
+      </button>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="nav-right">
+      <a href="/" target="_blank" class="btn-outline view-site-btn" title="Open portfolio website in new tab">
+        <lucide-icon [name]="ExternalLinkIcon" size="16"></lucide-icon>
+        <span>View Site</span>
+      </a>
+      <button class="btn-danger logout-btn" (click)="logout()" title="Lock dashboard and log out">
+        <lucide-icon [name]="LockIcon" size="16"></lucide-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="dashboard-body">
+    <!-- ========================================== -->
+    <!-- TAB 1: PROJECTS MANAGEMENT                 -->
+    <!-- ========================================== -->
+    <section class="tab-section" *ngIf="activeTab === 'projects'">
+      <div class="section-topbar">
+        <div>
+          <h2 class="tab-heading">Projects <span class="text-gradient">Manager</span></h2>
+          <p class="tab-subtext">Add, edit, or remove featured projects showcased on your portfolio.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-outline refresh-btn" (click)="loadProjects()" [disabled]="isLoadingProjects">
+            <lucide-icon [name]="RefreshIcon" size="16" [class.spin]="isLoadingProjects"></lucide-icon>
+            <span>Refresh</span>
+          </button>
+          <button class="btn-primary add-btn" (click)="openAddProjectModal()">
+            <lucide-icon [name]="PlusIcon" size="18"></lucide-icon>
+            <span>Add New Project</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="isLoadingProjects">
+        <div class="spinner"></div>
+        <p>Loading projects...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state glass" *ngIf="!isLoadingProjects && projects.length === 0">
+        <lucide-icon [name]="LayersIcon" size="48" class="empty-icon"></lucide-icon>
+        <h3>No projects found</h3>
+        <p>Click "Add New Project" to create your first portfolio project.</p>
+        <button class="btn-primary" (click)="openAddProjectModal()">
+          <lucide-icon [name]="PlusIcon" size="18"></lucide-icon>
+          <span>Create Project</span>
+        </button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="projects-admin-grid" *ngIf="!isLoadingProjects && projects.length > 0">
+        <div class="admin-project-card glass" *ngFor="let project of projects">
+          <div class="card-media-wrapper">
+            <img [src]="resolveUrl(project.image)" [alt]="project.title" class="card-image" />
+            <span class="category-tag">{{ project.category }}</span>
+            <span class="order-tag">#{{ project.order || 0 }}</span>
+          </div>
+
+          <div class="card-content">
+            <h3 class="card-title">{{ project.title }}</h3>
+            <p class="card-desc">{{ project.description }}</p>
+
+            <div class="tools-tags">
+              <span class="tag" *ngFor="let tool of project.tools">{{ tool }}</span>
+            </div>
+
+            <!-- Links Preview -->
+            <div class="card-links">
+              <a *ngIf="project.github" [href]="project.github" target="_blank" class="card-link" title="GitHub Repo">
+                <lucide-icon [name]="GithubIcon" size="16"></lucide-icon>
+                <span>GitHub</span>
+              </a>
+              <a *ngIf="project.link" [href]="project.link" target="_blank" class="card-link live" title="Live Preview">
+                <lucide-icon [name]="ExternalLinkIcon" size="16"></lucide-icon>
+                <span>Live Project</span>
+              </a>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="card-actions">
+              <button class="btn-action edit" (click)="openEditProjectModal(project)" title="Edit project">
+                <lucide-icon [name]="EditIcon" size="16"></lucide-icon>
+                <span>Edit</span>
+              </button>
+              <button class="btn-action delete" (click)="deleteProject(project)" title="Delete project">
+                <lucide-icon [name]="TrashIcon" size="16"></lucide-icon>
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: SHOWCASE / IMAGES SECTION           -->
+    <!-- ========================================== -->
+    <section class="tab-section" *ngIf="activeTab === 'gallery'">
+      <div class="section-topbar">
+        <div>
+          <h2 class="tab-heading">Showcase Media <span class="text-gradient">(Images Section)</span></h2>
+          <p class="tab-subtext">Replace images or videos in the "Web & Content Showcase" masonry gallery.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-outline refresh-btn" (click)="loadGallery()" [disabled]="isLoadingGallery">
+            <lucide-icon [name]="RefreshIcon" size="16" [class.spin]="isLoadingGallery"></lucide-icon>
+            <span>Refresh</span>
+          </button>
+          <button class="btn-primary add-btn" (click)="openAddGalleryModal()">
+            <lucide-icon [name]="PlusIcon" size="18"></lucide-icon>
+            <span>Add Showcase Item</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="isLoadingGallery">
+        <div class="spinner"></div>
+        <p>Loading showcase items...</p>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gallery-admin-grid" *ngIf="!isLoadingGallery && galleryItems.length > 0">
+        <div class="admin-gallery-card glass" *ngFor="let item of galleryItems">
+          <div class="gallery-media-preview">
+            <!-- Image Preview -->
+            <img *ngIf="item.image" [src]="resolveUrl(item.image)" [alt]="item.title" class="preview-img" />
+            <!-- Video Preview (if no image or has video) -->
+            <video *ngIf="!item.image && item.video" [src]="resolveUrl(item.video)" class="preview-video" muted controls></video>
+
+            <div class="media-badges">
+              <span class="media-type-badge image-badge" *ngIf="item.image">
+                <lucide-icon [name]="ImageIcon" size="14"></lucide-icon> Image
+              </span>
+              <span class="media-type-badge video-badge" *ngIf="item.video">
+                <lucide-icon [name]="VideoIcon" size="14"></lucide-icon> Video
+              </span>
+              <span class="size-badge">{{ item.size }}</span>
+            </div>
+          </div>
+
+          <div class="gallery-card-content">
+            <div class="item-meta">
+              <span class="category-pill">{{ item.category }}</span>
+              <span class="order-pill">Order: {{ item.order || 0 }}</span>
+            </div>
+            <h3 class="gallery-title">{{ item.title }}</h3>
+
+            <div class="media-paths">
+              <div class="path-item" *ngIf="item.image" title="{{ item.image }}">
+                <strong>Img:</strong> <span>{{ item.image }}</span>
+              </div>
+              <div class="path-item" *ngIf="item.video" title="{{ item.video }}">
+                <strong>Vid:</strong> <span>{{ item.video }}</span>
+              </div>
+            </div>
+
+            <!-- Action: Replace Media / Edit -->
+            <div class="card-actions">
+              <button class="btn-primary replace-btn" (click)="openEditGalleryModal(item)">
+                <lucide-icon [name]="EditIcon" size="16"></lucide-icon>
+                <span>Replace Media / Edit</span>
+              </button>
+              <button class="btn-action delete" (click)="deleteGalleryItem(item)" title="Delete Item">
+                <lucide-icon [name]="TrashIcon" size="16"></lucide-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ======================================================== -->
+<!-- MODAL 1: ADD / EDIT PROJECT                               -->
+<!-- ======================================================== -->
+<div class="modal-backdrop" *ngIf="isNewProjectModalOpen" (click)="closeProjectModal()">
+  <div class="modal-card glass" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <h3 class="modal-title">{{ projectForm._id ? 'Edit Project' : 'Add New Project' }}</h3>
+        <p class="modal-subtitle">Enter details, upload an image, and provide live & GitHub links.</p>
+      </div>
+      <button class="modal-close-btn" (click)="closeProjectModal()">
+        <lucide-icon [name]="CloseIcon" size="20"></lucide-icon>
+      </button>
+    </div>
+
+    <form (ngSubmit)="saveProject()" class="modal-form">
+      <div class="form-row">
+        <!-- Title -->
+        <div class="form-group flex-2">
+          <label for="projTitle">Project Title *</label>
+          <input
+            id="projTitle"
+            type="text"
+            [(ngModel)]="projectForm.title"
+            name="title"
+            placeholder="e.g. SYNCUBE"
+            required
+          />
+        </div>
+
+        <!-- Category -->
+        <div class="form-group flex-1">
+          <label for="projCategory">Category *</label>
+          <input
+            id="projCategory"
+            type="text"
+            [(ngModel)]="projectForm.category"
+            name="category"
+            placeholder="e.g. Full Stack App"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="projDesc">Description *</label>
+        <textarea
+          id="projDesc"
+          rows="3"
+          [(ngModel)]="projectForm.description"
+          name="description"
+          placeholder="Describe the key features and purpose of the project..."
+          required
+        ></textarea>
+      </div>
+
+      <!-- IMAGE INPUT & UPLOADER -->
+      <div class="form-group media-field-group">
+        <label>Project Image * (Upload file or enter URL/path)</label>
+        <div class="media-input-dual">
+          <input
+            type="text"
+            [(ngModel)]="projectForm.image"
+            name="image"
+            placeholder="assets/my-project.png or /uploads/image.png or https://..."
+            required
+          />
+          <label class="btn-outline file-upload-btn">
+            <lucide-icon [name]="UploadIcon" size="16"></lucide-icon>
+            <span>Upload Image</span>
+            <input type="file" accept="image/*" (change)="onProjectImageUpload($event)" hidden />
+          </label>
+        </div>
+
+        <!-- Image Live Preview -->
+        <div class="live-preview-box" *ngIf="projectForm.image">
+          <span class="preview-label">Live Preview:</span>
+          <img [src]="resolveUrl(projectForm.image)" alt="Project Preview" class="preview-thumbnail" />
+        </div>
+      </div>
+
+      <!-- LINKS: GITHUB & LIVE DEMO -->
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="projGithub">
+            <lucide-icon [name]="GithubIcon" size="14"></lucide-icon>
+            GitHub Repository Link
+          </label>
+          <input
+            id="projGithub"
+            type="url"
+            [(ngModel)]="projectForm.github"
+            name="github"
+            placeholder="https://github.com/naivedhP2518/my-project"
+          />
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="projLink">
+            <lucide-icon [name]="ExternalLinkIcon" size="14"></lucide-icon>
+            Live Project Demo Link
+          </label>
+          <input
+            id="projLink"
+            type="url"
+            [(ngModel)]="projectForm.link"
+            name="link"
+            placeholder="https://myproject.vercel.app"
+          />
+        </div>
+      </div>
+
+      <!-- TOOLS & ORDER -->
+      <div class="form-row">
+        <div class="form-group flex-2">
+          <label for="projTools">Tech Stack / Tools (comma-separated)</label>
+          <input
+            id="projTools"
+            type="text"
+            [(ngModel)]="projectForm.toolsString"
+            name="tools"
+            placeholder="Angular, Node.js, Express, MongoDB, TypeScript"
+          />
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="projOrder">Display Order</label>
+          <input
+            id="projOrder"
+            type="number"
+            [(ngModel)]="projectForm.order"
+            name="order"
+            min="1"
+          />
+        </div>
+      </div>
+
+      <!-- Uploading Status Indicator -->
+      <div class="uploading-indicator" *ngIf="isUploading">
+        <span class="loader-spinner"></span>
+        <span>{{ uploadProgressMsg }}</span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-outline" (click)="closeProjectModal()">Cancel</button>
+        <button type="submit" class="btn-primary" [disabled]="isUploading">
+          <lucide-icon [name]="SaveIcon" size="18"></lucide-icon>
+          <span>{{ projectForm._id ? 'Update Project' : 'Create Project' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- MODAL 2: ADD / EDIT / REPLACE SHOWCASE MEDIA (IMAGES)     -->
+<!-- ======================================================== -->
+<div class="modal-backdrop" *ngIf="isGalleryModalOpen" (click)="closeGalleryModal()">
+  <div class="modal-card glass" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <h3 class="modal-title">{{ galleryForm._id ? 'Replace Media / Edit Showcase' : 'Add Showcase Item' }}</h3>
+        <p class="modal-subtitle">Replace or configure the image and video for this showcase item.</p>
+      </div>
+      <button class="modal-close-btn" (click)="closeGalleryModal()">
+        <lucide-icon [name]="CloseIcon" size="20"></lucide-icon>
+      </button>
+    </div>
+
+    <form (ngSubmit)="saveGalleryItem()" class="modal-form">
+      <div class="form-row">
+        <!-- Title -->
+        <div class="form-group flex-2">
+          <label for="galTitle">Title *</label>
+          <input
+            id="galTitle"
+            type="text"
+            [(ngModel)]="galleryForm.title"
+            name="title"
+            placeholder="e.g. Video Motion Graphic"
+            required
+          />
+        </div>
+
+        <!-- Category -->
+        <div class="form-group flex-1">
+          <label for="galCategory">Category *</label>
+          <input
+            id="galCategory"
+            type="text"
+            [(ngModel)]="galleryForm.category"
+            name="category"
+            placeholder="e.g. Creative, Editing, Full Stack"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- SIZE & ORDER -->
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="galSize">Masonry Grid Card Size</label>
+          <select id="galSize" [(ngModel)]="galleryForm.size" name="size">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="galOrder">Display Order</label>
+          <input
+            id="galOrder"
+            type="number"
+            [(ngModel)]="galleryForm.order"
+            name="order"
+            min="1"
+          />
+        </div>
+      </div>
+
+      <!-- REPLACE / CONFIGURE IMAGE -->
+      <div class="media-config-card glass">
+        <div class="media-config-header">
+          <div class="header-left">
+            <lucide-icon [name]="ImageIcon" size="18" class="text-accent"></lucide-icon>
+            <strong>Thumbnail / Showcase Image</strong>
+          </div>
+          <label class="btn-outline file-upload-btn">
+            <lucide-icon [name]="UploadIcon" size="14"></lucide-icon>
+            <span>Replace / Upload Image</span>
+            <input type="file" accept="image/*" (change)="onGalleryImageUpload($event)" hidden />
+          </label>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            [(ngModel)]="galleryForm.image"
+            name="image"
+            placeholder="assets/CoverPage.png or /uploads/... or https://..."
+          />
+        </div>
+
+        <!-- Image Preview -->
+        <div class="media-preview-pane" *ngIf="galleryForm.image">
+          <span class="preview-label">Image Preview:</span>
+          <img [src]="resolveUrl(galleryForm.image)" alt="Showcase Preview" class="pane-img" />
+        </div>
+      </div>
+
+      <!-- REPLACE / CONFIGURE VIDEO -->
+      <div class="media-config-card glass">
+        <div class="media-config-header">
+          <div class="header-left">
+            <lucide-icon [name]="VideoIcon" size="18" class="text-accent"></lucide-icon>
+            <strong>Lightbox / Showcase Video (Optional)</strong>
+          </div>
+          <label class="btn-outline file-upload-btn">
+            <lucide-icon [name]="UploadIcon" size="14"></lucide-icon>
+            <span>Replace / Upload Video</span>
+            <input type="file" accept="video/mp4,video/webm" (change)="onGalleryVideoUpload($event)" hidden />
+          </label>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            [(ngModel)]="galleryForm.video"
+            name="video"
+            placeholder="assets/SojaZara.mp4 or /uploads/... or https://..."
+          />
+        </div>
+
+        <!-- Video Preview -->
+        <div class="media-preview-pane" *ngIf="galleryForm.video">
+          <span class="preview-label">Video Preview:</span>
+          <video [src]="resolveUrl(galleryForm.video)" class="pane-video" controls></video>
+        </div>
+      </div>
+
+      <!-- Uploading Status Indicator -->
+      <div class="uploading-indicator" *ngIf="isUploading">
+        <span class="loader-spinner"></span>
+        <span>{{ uploadProgressMsg }}</span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-outline" (click)="closeGalleryModal()">Cancel</button>
+        <button type="submit" class="btn-primary" [disabled]="isUploading">
+          <lucide-icon [name]="SaveIcon" size="18"></lucide-icon>
+          <span>{{ galleryForm._id ? 'Save Changes' : 'Create Showcase Item' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

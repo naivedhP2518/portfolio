@@ -1,9 +1,10 @@
-import { Component, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, ExternalLink, Github, Eye } from 'lucide-angular';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LoadingService } from '../../services/loading.service';
+import { ApiService, ProjectItem } from '../../services/api.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,16 +15,34 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })
-export class Projects implements AfterViewInit {
+export class Projects implements OnInit, AfterViewInit {
   @ViewChildren('projectCard') projectCards!: QueryList<ElementRef>;
 
   readonly ExternalLinkIcon = ExternalLink;
   readonly GithubIcon = Github;
   readonly EyeIcon = Eye;
 
-  constructor(private loadingService: LoadingService) { }
+  constructor(
+    private loadingService: LoadingService,
+    private apiService: ApiService
+  ) {}
 
-  projects = [
+  resolveUrl(url?: string): string {
+    return this.apiService.resolveMediaUrl(url);
+  }
+
+  ngOnInit() {
+    this.apiService.getProjects().subscribe({
+      next: (res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          this.projects = res.data;
+          setTimeout(() => ScrollTrigger.refresh(), 200);
+        }
+      },
+    });
+  }
+
+  projects: ProjectItem[] = [
     {
       title: 'SYNCUBE',
       category: 'Full Stack App',

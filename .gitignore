@@ -46,3 +46,10 @@ Thumbs.db
 # Large video files
 Frontend/public/assets/MemeBaseVideo.mp4
 *.mp4
+
+# Backend
+/Backend/node_modules
+/Backend/dist
+/Backend/.env
+/Backend/uploads/
+

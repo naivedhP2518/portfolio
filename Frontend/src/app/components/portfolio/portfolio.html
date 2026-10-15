@@ -9,10 +9,10 @@
       <div *ngFor="let item of galleryItems" class="masonry-item" [class]="item.size">
         <div class="gallery-card glass">
           <!-- Media Thumbnail (Prioritize Image for Grid) -->
-          <img *ngIf="item.image" [src]="item.image" [alt]="item.title" class="gallery-media">
+          <img *ngIf="item.image" [src]="resolveUrl(item.image)" [alt]="item.title" class="gallery-media">
           
           <!-- Show Video only if NO Image is provided (as fallback) -->
-          <video *ngIf="!item.image && item.video" [src]="item.video" class="gallery-media" muted playsinline></video>
+          <video *ngIf="!item.image && item.video" [src]="resolveUrl(item.video)" class="gallery-media" muted playsinline></video>
 
           <div *ngIf="!item.image && !item.video" class="gallery-placeholder">
             <lucide-icon [name]="SearchIcon" size="32" class="icon-search"></lucide-icon>
@@ -23,7 +23,7 @@
               <h3>{{ item.title }}</h3>
               <span class="item-category">{{ item.category }}</span>
             </div>
-            <button class="expand-btn" (click)="item.video ? openModal(item.video, 'video') : openModal(item.image!, 'image')">
+            <button class="expand-btn" (click)="item.video ? openModal(resolveUrl(item.video), 'video') : openModal(resolveUrl(item.image!), 'image')">
               <lucide-icon [name]="item.video ? VideoIcon : MaximizeIcon" size="18"></lucide-icon>
             </button>
           </div>

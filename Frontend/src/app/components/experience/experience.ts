@@ -1,9 +1,10 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Calendar, MapPin, Code, Video, GraduationCap, School, BookOpen } from 'lucide-angular';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LoadingService } from '../../services/loading.service';
+import { ApiService, ExperienceItem } from '../../services/api.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './experience.html',
   styleUrl: './experience.scss',
 })
-export class Experience implements AfterViewInit {
+export class Experience implements OnInit, AfterViewInit {
   readonly CalendarIcon = Calendar;
   readonly MapIcon = MapPin;
   readonly CodeIcon = Code;
@@ -23,9 +24,35 @@ export class Experience implements AfterViewInit {
   readonly SchoolIcon = School;
   readonly BookIcon = BookOpen;
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(
+    private loadingService: LoadingService,
+    private apiService: ApiService
+  ) {}
 
-  experiences = [
+  private getIconForRole(role: string, company: string): any {
+    const combined = `${role} ${company}`.toLowerCase();
+    if (combined.includes('video')) return this.VideoIcon;
+    if (combined.includes('bachelor') || combined.includes('engineering') || combined.includes('institute')) return this.GradIcon;
+    if (combined.includes('hsce') || combined.includes('boarding')) return this.SchoolIcon;
+    if (combined.includes('ssce') || combined.includes('school')) return this.BookIcon;
+    return this.CodeIcon;
+  }
+
+  ngOnInit() {
+    this.apiService.getExperiences().subscribe({
+      next: (res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          this.experiences = res.data.map((item) => ({
+            ...item,
+            icon: this.getIconForRole(item.role, item.company),
+          }));
+          setTimeout(() => ScrollTrigger.refresh(), 200);
+        }
+      },
+    });
+  }
+
+  experiences: any[] = [
     {
       company: 'Web Development',
       role: 'Web Developer',
