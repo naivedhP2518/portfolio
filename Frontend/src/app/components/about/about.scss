@@ -52,42 +52,6 @@
   }
 }
 
-.experience-badge {
-  position: absolute;
-  bottom: 0.5rem;
-  right: -1rem;
-  padding: 1.25rem 1.75rem;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  z-index: 5;
-  backdrop-filter: blur(12px) saturate(180%);
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid var(--accent-color);
-  box-shadow: 0 8px 32px 0 rgba(244, 208, 111, 0.15);
-
-  @media (max-width: 1024px) {
-    right: 2rem;
-  }
-
-  .count {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--tertiary-color);
-    line-height: 1;
-  }
-
-  .label {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--text-color);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    line-height: 1.2;
-  }
-}
-
 .section-tag {
   color: var(--tertiary-color);
   text-transform: uppercase;

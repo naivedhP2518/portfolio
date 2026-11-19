@@ -46,25 +46,18 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'SYNCUBE',
       category: 'Full Stack App',
-      description: 'A real-time synchronization and collaboration platform with secure user authentication, workspace management, and dynamic live updates.',
+      description: 'A full stack collaboration platform with authenticated access and workspace management. It keeps team activity synchronized through live updates.',
+      feature: 'Real-time workspace synchronization with secure user authentication.',
       image: 'assets/SYNCUBE.png',
       tools: ['Node.js', 'Express', 'TypeScript', 'MongoDB', 'Vercel'],
       link: 'https://syncube.vercel.app/login',
       github: 'https://github.com/naivedhP2518/SYNCUBE'
     },
     {
-      title: 'Hotel Website',
-      category: 'MEAN Stack',
-      description: 'Developed a modern hotel booking interface with premium UI design, smooth animations, and responsive layout.',
-      image: 'assets/hotel-web.png',
-      tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
-      link: 'https://the-grand-oasis-resort.vercel.app',
-      github: 'https://github.com/naivedhP2518/The-Grand-Oasis-Resort'
-    },
-    {
       title: 'Rental Website',
       category: 'MEAN Stack',
-      description: 'Built a complete rental platform with backend integration, database handling, and user interaction features.',
+      description: 'A full stack rental platform with backend and database integration. It brings rental listings and user interactions together in one application.',
+      feature: 'Connects rental listings to backend services and persistent data.',
       image: 'assets/Rental-web.png',
       tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
       link: 'https://urban-nest-flax.vercel.app',
@@ -73,29 +66,42 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'Live Chat Website',
       category: 'Socket.IO Integration',
-      description: 'Created a real-time chat application using Socket.IO with instant messaging and dynamic updates.',
+      description: 'A real-time chat application built with Angular and a Node.js backend. Messages update instantly through Socket.IO.',
+      feature: 'Instant message delivery using Socket.IO.',
       image: 'assets/Chat-Web.png',
       tools: ['Socket.io', 'Node.js', 'Express', 'Angular'],
       link: 'https://naivedhp2518.github.io/Under-Maintenance/',
       github: 'https://github.com/naivedhP2518/Chat-Web'
     },
     {
+      title: 'Hotel Website',
+      category: 'MEAN Stack',
+      description: 'A responsive hotel booking experience built with the MEAN stack. The interface presents resort information and booking flows in a polished layout.',
+      feature: 'Responsive booking interface for exploring a hotel resort.',
+      image: 'assets/hotel-web.png',
+      tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
+      link: 'https://the-grand-oasis-resort.vercel.app',
+      github: 'https://github.com/naivedhP2518/The-Grand-Oasis-Resort'
+    },
+    {
       title: 'Headphone Website',
       category: 'Frontend & Canvas',
-      description: 'Designed a premium audio product landing page with interactive 3D canvas animations, glassmorphism UI, and kinetic mechanics.',
+      description: 'An interactive product landing page for headphones, built with web technologies and canvas animation. It combines a responsive presentation with 3D visuals.',
+      feature: 'Interactive 3D product presentation in the browser.',
       image: 'assets/headpnone.png',
       tools: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
       link: 'https://naivedhp2518.github.io/Aurora-X-Headphone/',
       github: 'https://github.com/naivedhP2518/Aurora-X-Headphone'
     },
     {
-      title: '10+ Small Projects',
+      title: 'TODO: Add a named development project',
       category: 'Frontend Only',
-      description: 'Including UI-based apps, tools, and mini web applications showcasing various developer skills.',
+      description: 'TODO: Add a concise description of a specific development project and the problem it solves.',
+      feature: 'TODO: Add the key feature or problem solved.',
       image: 'assets/More-Projects.png',
-      tools: ['HTML', 'CSS', 'JavaScript'],
-      link: 'https://naivedhp2518.github.io/Small-Projects/index.html',
-      github: 'https://github.com/naivedhP2518?tab=repositories'
+      tools: ['TODO: Add project technologies'],
+      link: '',
+      github: ''
     }
   ];
 

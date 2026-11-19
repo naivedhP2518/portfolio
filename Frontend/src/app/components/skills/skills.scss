@@ -148,3 +148,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.skills-groups .marquee-wrapper {
+  overflow: visible;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+.skills-track {
+  width: 100%;
+  flex-wrap: wrap;
+  animation: none !important;
+}

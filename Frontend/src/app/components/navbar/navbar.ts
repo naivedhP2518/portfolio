@@ -20,11 +20,11 @@ export class Navbar {
   isMenuOpen = signal(false);
 
   navLinks = [
+    { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   @HostListener('window:scroll', [])

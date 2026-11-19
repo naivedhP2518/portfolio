@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, Mail, Phone, MapPin, Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-angular';
+import { LucideAngularModule, Mail, Github, Linkedin, Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-angular';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -13,8 +13,8 @@ import { ApiService } from '../../services/api.service';
 })
 export class Contact {
   readonly MailIcon = Mail;
-  readonly PhoneIcon = Phone;
-  readonly MapIcon = MapPin;
+  readonly GithubIcon = Github;
+  readonly LinkedinIcon = Linkedin;
   readonly SendIcon = Send;
   readonly MsgIcon = MessageSquare;
   readonly SuccessIcon = CheckCircle;
@@ -34,16 +34,16 @@ export class Contact {
       link: 'mailto:naivedhpatel25@gmail.com'
     },
     {
-      icon: this.PhoneIcon,
-      label: 'Phone',
-      value: '+91 9313096998',
-      link: 'tel:+919313096998'
+      icon: this.GithubIcon,
+      label: 'GitHub',
+      value: 'github.com/naivedhP2518',
+      link: 'https://github.com/naivedhP2518'
     },
     {
-      icon: this.MapIcon,
-      label: 'Location',
-      value: 'Nandanvan Society, Vadodara',
-      link: 'https://maps.app.goo.gl/rQ3MCA8PQb7Neswt7'
+      icon: this.LinkedinIcon,
+      label: 'LinkedIn',
+      value: 'TODO: Add LinkedIn profile URL',
+      link: ''
     }
   ];
 

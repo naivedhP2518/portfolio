@@ -33,7 +33,7 @@ export class Hero implements AfterViewInit {
   initAnimations() {
     const tl = gsap.timeline();
 
-    tl.from('.hero-title .char', {
+    tl.from('.hero-title', {
       y: 100,
       opacity: 0,
       duration: 1,

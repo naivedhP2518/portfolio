@@ -1,10 +1,9 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Calendar, MapPin, Code, GraduationCap, School, BookOpen } from 'lucide-angular';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LoadingService } from '../../services/loading.service';
-import { ApiService, ExperienceItem } from '../../services/api.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './experience.html',
   styleUrl: './experience.scss',
 })
-export class Experience implements OnInit, AfterViewInit {
+export class Experience implements AfterViewInit {
   readonly CalendarIcon = Calendar;
   readonly MapIcon = MapPin;
   readonly CodeIcon = Code;
@@ -23,10 +22,7 @@ export class Experience implements OnInit, AfterViewInit {
   readonly SchoolIcon = School;
   readonly BookIcon = BookOpen;
 
-  constructor(
-    private loadingService: LoadingService,
-    private apiService: ApiService
-  ) {}
+  constructor(private loadingService: LoadingService) {}
 
   private getIconForRole(role: string, company: string): any {
     const combined = `${role} ${company}`.toLowerCase();
@@ -36,34 +32,7 @@ export class Experience implements OnInit, AfterViewInit {
     return this.CodeIcon;
   }
 
-  ngOnInit() {
-    this.apiService.getExperiences().subscribe({
-      next: (res) => {
-        if (res.success && res.data && res.data.length > 0) {
-          this.experiences = res.data.map((item) => ({
-            ...item,
-            icon: this.getIconForRole(item.role, item.company),
-          }));
-          setTimeout(() => ScrollTrigger.refresh(), 200);
-        }
-      },
-    });
-  }
-
   experiences: any[] = [
-    {
-      company: 'Web Development',
-      role: 'Web Developer',
-      location: 'Vadodara',
-      duration: 'Ongoing',
-      icon: this.CodeIcon,
-      description: 'Building responsive and interactive web applications with modern UI/UX design.',
-      highlights: [
-        'Built responsive and interactive web applications.',
-        'Designed modern UI layouts with smooth user experience.',
-        'Worked on multiple real-world inspired projects.'
-      ]
-    },
     {
       company: 'Parul Institute of Engineering & Technology',
       role: 'Bachelor of Technology',
@@ -76,24 +45,7 @@ export class Experience implements OnInit, AfterViewInit {
         'Active member of the tech community.'
       ]
     },
-    {
-      company: 'Modi Boarding School',
-      role: 'HSCE',
-      location: 'Rajkot',
-      duration: '2022 — 2023',
-      icon: this.SchoolIcon,
-      description: 'Higher Secondary School Certificate.',
-      highlights: []
-    },
-    {
-      company: 'New Sarwa Mangal School',
-      role: 'SSCE',
-      location: 'Vadodara',
-      duration: '2020 — 2021',
-      icon: this.BookIcon,
-      description: 'Secondary School Certificate.',
-      highlights: []
-    }
+
   ];
 
   ngAfterViewInit() {

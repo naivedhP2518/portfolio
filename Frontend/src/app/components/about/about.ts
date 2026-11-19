@@ -35,8 +35,8 @@ export class About implements AfterViewInit, OnDestroy {
     },
     {
       icon: Globe,
-      title: 'UI/UX Design',
-      description: 'Specializing in modern UI/UX design, problem-solving, and dynamic web platforms.'
+      title: 'Backend Development',
+      description: 'Building APIs and connecting application features to persistent data with Node.js, Express, and MongoDB.'
     }
   ];
 
