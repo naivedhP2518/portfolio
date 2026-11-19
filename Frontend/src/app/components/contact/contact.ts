@@ -69,10 +69,9 @@ export class Contact {
         // Reset success message after 5 seconds
         setTimeout(() => (this.isSuccess = false), 5000);
       },
-      error: (error) => {
+      error: () => {
         this.isSubmitting = false;
         this.isError = true;
-        console.error('Contact submission error:', error);
       }
     });
   }

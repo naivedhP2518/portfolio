@@ -29,6 +29,14 @@
       </div>
 
       <div class="contact-form-container glass">
+        <div *ngIf="isSuccess" class="form-feedback success-feedback" role="status">
+          <lucide-icon [name]="SuccessIcon" size="22"></lucide-icon>
+          <div class="feedback-text"><h4>Message sent</h4><p>Thanks for reaching out. I’ll get back to you soon.</p></div>
+        </div>
+        <div *ngIf="isError" class="form-feedback error-feedback" role="alert">
+          <lucide-icon [name]="ErrorIcon" size="22"></lucide-icon>
+          <div class="feedback-text"><h4>Message could not be sent</h4><p>Please try again later or use the contact details above.</p></div>
+        </div>
         <form #contactForm="ngForm" (ngSubmit)="onSubmit()" class="contact-form">
           <div class="form-group">
             <label for="name">Your Name</label>
