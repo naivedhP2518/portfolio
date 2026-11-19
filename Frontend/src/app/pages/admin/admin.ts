@@ -62,10 +62,11 @@ export class AdminComponent implements OnInit {
   activeAdminKey = '';
 
 
+  activeTab: 'projects' = 'projects';
+
   // Projects State
   projects: ProjectItem[] = [];
   isLoadingProjects = false;
-  editingProject: Partial<ProjectItem> | null = null;
   isNewProjectModalOpen = false;
   projectForm: {
     _id?: string;

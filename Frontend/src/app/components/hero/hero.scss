@@ -42,19 +42,15 @@
   font-size: 5.5rem;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  overflow: visible;
+  display: block;
+  overflow-wrap: anywhere;
   color: var(--text-color);
 
   @media (max-width: 768px) {
     font-size: 3.5rem;
   }
 
-  .char {
-    display: inline-block;
-  }
 }
 
 .hero-subtitle {
@@ -162,4 +158,35 @@
   0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
   40% { transform: translateY(-8px); }
   60% { transform: translateY(-4px); }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.75rem;
+    line-height: 1.08;
+    overflow-wrap: normal;
+  }
+
+  .hero-greeting {
+    font-size: 1rem;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-cta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    .btn {
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  .scroll-indicator {
+    bottom: 0.75rem;
+  }
 }

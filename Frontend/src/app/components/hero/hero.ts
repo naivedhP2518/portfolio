@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, ArrowDown, Github, Mail } from 'lucide-angular';
+import { LucideAngularModule, ArrowDown, Github } from 'lucide-angular';
 import gsap from 'gsap';
 import { LoadingService } from '../../services/loading.service';
 
@@ -14,7 +14,6 @@ import { LoadingService } from '../../services/loading.service';
 export class Hero implements AfterViewInit {
   readonly ArrowIcon = ArrowDown;
   readonly GithubIcon = Github;
-  readonly MailIcon = Mail;
 
   @ViewChild('heroContent') heroContent!: ElementRef;
   @ViewChild('heroBg') heroBg!: ElementRef;

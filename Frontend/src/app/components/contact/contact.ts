@@ -30,8 +30,8 @@ export class Contact {
     {
       icon: this.MailIcon,
       label: 'Email',
-      value: 'naivedhpatel25@gmail.com',
-      link: 'mailto:naivedhpatel25@gmail.com'
+      value: 'TODO: Confirm preferred email address',
+      link: ''
     },
     {
       icon: this.GithubIcon,

@@ -42,7 +42,6 @@ export class Experience implements AfterViewInit {
       description: 'Pursuing B.Tech in Engineering & Technology.',
       highlights: [
         'Focusing on modern web technologies and full-stack development.',
-        'Active member of the tech community.'
       ]
     },
 

@@ -206,7 +206,7 @@
         <h3 class="modal-title">{{ projectForm._id ? 'Edit Project' : 'Add New Project' }}</h3>
         <p class="modal-subtitle">Enter details, upload an image, and provide live & GitHub links.</p>
       </div>
-      <button class="modal-close-btn" (click)="closeProjectModal()" aria-label="Close project editor">
+      <button class="modal-close-btn" (click)="closeProjectModal()" aria-label="Close project form">
         <lucide-icon [name]="CloseIcon" size="20"></lucide-icon>
       </button>
     </div>
@@ -274,7 +274,7 @@
         <!-- Image Live Preview -->
         <div class="live-preview-box" *ngIf="projectForm.image">
           <span class="preview-label">Live Preview:</span>
-          <img [src]="resolveUrl(projectForm.image)" alt="Preview of the project screenshot" class="preview-thumbnail" loading="lazy" decoding="async" />
+          <img [src]="resolveUrl(projectForm.image)" alt="Preview of the project screenshot" class="preview-image" loading="lazy" decoding="async" />
         </div>
       </div>
 
