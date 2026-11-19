@@ -36,3 +36,10 @@ The Angular development server runs at `http://localhost:4200`.
 cd Frontend
 npm run build
 ```
+
+## Deploy a Vercel preview
+
+1. Set `apiUrl` in `Frontend/src/environments/environment.prod.ts` to the deployed backend API URL (including `/api`).
+2. Push `refactor/fullstack-portfolio` and create a Vercel preview deployment from that branch.
+3. Set the Vercel project root to `Frontend`, build command to `npm run vercel-build`, and output directory to `dist/portfolio-app/browser`.
+4. Configure the backend environment and CORS to allow the preview domain. Review the preview before promoting any deployment.
