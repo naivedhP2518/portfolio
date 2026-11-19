@@ -30,8 +30,8 @@ export class Contact {
     {
       icon: this.MailIcon,
       label: 'Email',
-      value: 'TODO: Confirm preferred email address',
-      link: ''
+      value: 'naivedhpatel2514@gmail.com',
+      link: 'mailto:naivedhpatel2514@gmail.com'
     },
     {
       icon: this.GithubIcon,
@@ -42,8 +42,8 @@ export class Contact {
     {
       icon: this.LinkedinIcon,
       label: 'LinkedIn',
-      value: 'TODO: Add LinkedIn profile URL',
-      link: ''
+      value: 'linkedin.com/in/naivedh2518',
+      link: 'https://www.linkedin.com/in/naivedh2518/'
     }
   ];
 

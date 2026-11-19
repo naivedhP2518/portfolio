@@ -36,7 +36,7 @@ export class Projects implements OnInit, AfterViewInit {
             .map((project) => {
               const curated = curatedProjects.find((item) => item.title === project.title)
                 ?? (project.title === '10+ Small Projects'
-                  ? curatedProjects.find((item) => item.title.startsWith('TODO:'))
+                  ? curatedProjects.find((item) => item.title === 'Small Projects')
                   : undefined);
               return curated
                 ? { ...project, ...curated, _id: project._id }
@@ -106,14 +106,15 @@ export class Projects implements OnInit, AfterViewInit {
       github: 'https://github.com/naivedhP2518/Aurora-X-Headphone'
     },
     {
-      title: 'TODO: Add a named development project',
+      title: 'Small Projects',
       category: 'Frontend Only',
-      description: 'TODO: Add a concise description of a specific development project and the problem it solves.',
-      feature: 'TODO: Add the key feature or problem solved.',
+      description: 'A collection of small frontend projects and web apps, brought together in one place.',
+      feature: 'Explore a range of small web projects from one collection.',
       image: 'assets/More-Projects.webp',
-      tools: ['TODO: Add project technologies'],
-      link: '',
-      github: ''
+      tools: ['HTML', 'CSS', 'JavaScript'],
+      link: 'https://naivedhp2518.github.io/Small-Projects/index.html',
+      github: '',
+      githubOptional: true
     }
   ];
 

@@ -13,6 +13,7 @@ export interface ProjectItem {
   tools: string[];
   link?: string;
   github?: string;
+  githubOptional?: boolean;
   order?: number;
   featured?: boolean;
 }

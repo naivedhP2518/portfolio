@@ -9,6 +9,7 @@ export interface IProject extends Document {
   tools: string[];
   link?: string;
   github?: string;
+  githubOptional?: boolean;
   order: number;
   featured: boolean;
   createdAt: Date;
@@ -52,6 +53,10 @@ const ProjectSchema: Schema = new Schema(
     github: {
       type: String,
       trim: true,
+    },
+    githubOptional: {
+      type: Boolean,
+      default: false,
     },
     order: {
       type: Number,

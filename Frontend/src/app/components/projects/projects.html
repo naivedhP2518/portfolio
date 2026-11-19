@@ -23,7 +23,7 @@
             <a *ngIf="project.link; else missingDemo" [href]="project.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary project-action">Live Demo</a>
             <ng-template #missingDemo><span class="project-todo">TODO: Add Live Demo URL</span></ng-template>
             <a *ngIf="project.github; else missingGithub" [href]="project.github" target="_blank" rel="noopener noreferrer" class="btn btn-outline project-action">GitHub</a>
-            <ng-template #missingGithub><span class="project-todo">TODO: Add GitHub URL</span></ng-template>
+            <ng-template #missingGithub><span *ngIf="!project.githubOptional" class="project-todo">TODO: Add GitHub URL</span></ng-template>
           </div>
         </div>
       </article>
