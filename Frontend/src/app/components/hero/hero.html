@@ -21,15 +21,15 @@
     <a href="https://github.com/naivedhP2518" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
       <lucide-icon [name]="GithubIcon"></lucide-icon>
     </a>
-    <a href="mailto:naivedhpatel25@gmail.com" class="social-link">
+    <a href="mailto:naivedhpatel25@gmail.com" class="social-link" aria-label="Email Naivedh Patel">
       <lucide-icon [name]="MailIcon"></lucide-icon>
     </a>
     <div class="vertical-line"></div>
   </div>
 
   <!-- Scroll Indicator -->
-  <div class="scroll-indicator" (click)="scrollToAbout()">
+  <button type="button" class="scroll-indicator" aria-label="Scroll to about section" (click)="scrollToAbout()">
     <lucide-icon [name]="ArrowIcon" class="bounce"></lucide-icon>
     <span>Scroll</span>
-  </div>
+  </button>
 </section>

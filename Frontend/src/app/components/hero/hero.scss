@@ -139,11 +139,19 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  border: 0;
+  background: transparent;
+  font: inherit;
   color: var(--text-muted);
   font-size: 0.8rem;
   letter-spacing: 2px;
   text-transform: uppercase;
   z-index: 10;
+
+  &:focus-visible {
+    outline: 3px solid var(--tertiary-color);
+    outline-offset: 4px;
+  }
 
   .bounce {
     animation: bounce 2s infinite;

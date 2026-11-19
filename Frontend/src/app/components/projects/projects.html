@@ -8,7 +8,7 @@
     <div class="projects-grid">
       <article *ngFor="let project of projects" class="project-card glass" #projectCard>
         <div class="project-image-wrapper">
-          <img *ngIf="project.image" [src]="resolveUrl(project.image)" [alt]="project.title + ' application screenshot'" class="project-image" loading="lazy">
+          <img *ngIf="project.image" [src]="resolveUrl(project.image)" [alt]="project.title + ' application screenshot'" class="project-image" loading="lazy" decoding="async">
           <div class="category-pill">{{ project.category }}</div>
         </div>
 

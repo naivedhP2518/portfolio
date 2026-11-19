@@ -17,17 +17,6 @@ export interface ProjectItem {
   featured?: boolean;
 }
 
-export interface ExperienceItem {
-  _id?: string;
-  company: string;
-  role: string;
-  location: string;
-  duration: string;
-  description: string;
-  highlights: string[];
-  order?: number;
-}
-
 export interface ContactPayload {
   name: string;
   email: string;
@@ -55,7 +44,8 @@ export class ApiService {
       const backendBase = this.apiUrl.replace(/\/api\/?$/, '');
       return `${backendBase}${url}`;
     }
-    return url;
+    const optimizedAssets = /^(assets\/(?:Chat-Web|More-Projects|Naivedh|Rental-web|SYNCUBE|headpnone|hotel-web))\.png$/;
+    return url.replace(optimizedAssets, '$1.webp');
   }
 
   // Admin Verification
@@ -114,15 +104,5 @@ export class ApiService {
     );
   }
 
-  // Experience API
-  getExperiences(): Observable<{ success: boolean; data: ExperienceItem[] }> {
-    return this.http
-      .get<{ success: boolean; data: ExperienceItem[] }>(`${this.apiUrl}/experience`)
-      .pipe(
-        catchError((err) => {
-          console.warn('Backend API unavailable, using local experience fallback:', err);
-          return of({ success: false, data: [] });
-        })
-      );
-  }
+
 }

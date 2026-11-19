@@ -21,7 +21,7 @@ export class About implements AfterViewInit, OnDestroy {
   @ViewChild('aboutImage') aboutImage!: ElementRef;
   @ViewChild('aboutContent') aboutContent!: ElementRef;
 
-  profileImage = 'assets/Naivedh.png'; 
+  profileImage = 'assets/Naivedh.webp';
 
   readonly UserIcon = User;
   readonly CodeIcon = Code2;

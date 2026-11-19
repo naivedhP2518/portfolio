@@ -1,32 +1,32 @@
 <nav [class.scrolled]="isScrolled()" [class.glass]="isScrolled()" class="navbar">
   <div class="container nav-content">
-    <div class="logo" (click)="scrollToSection('#hero')">
+    <a class="logo" href="#hero" (click)="scrollToSection('#hero', $event)">
       <lucide-icon [name]="PointerIcon" class="logo-icon"></lucide-icon>
       <span class="logo-text">NAIVEDH<span class="text-gradient">.PATEL</span></span>
-    </div>
+    </a>
 
     <!-- Desktop Nav -->
     <ul class="nav-links">
       <li *ngFor="let link of navLinks">
-        <a (click)="scrollToSection(link.href)" class="nav-link">{{ link.name }}</a>
+        <a [href]="link.href" (click)="scrollToSection(link.href, $event)" class="nav-link">{{ link.name }}</a>
       </li>
     </ul>
 
     <div class="nav-actions">
-      <a href="https://github.com/naivedhP2518" target="_blank" class="social-icon">
+      <a href="https://github.com/naivedhP2518" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
         <lucide-icon [name]="GithubIcon"></lucide-icon>
       </a>
-      <button class="mobile-toggle" (click)="toggleMenu()">
+      <button type="button" class="mobile-toggle" (click)="toggleMenu()" [attr.aria-label]="isMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'" [attr.aria-expanded]="isMenuOpen()" aria-controls="mobile-menu">
         <lucide-icon [name]="isMenuOpen() ? XIcon : MenuIcon"></lucide-icon>
       </button>
     </div>
   </div>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu" [class.open]="isMenuOpen()">
+  <div id="mobile-menu" class="mobile-menu" [class.open]="isMenuOpen()">
     <ul class="mobile-nav-links">
       <li *ngFor="let link of navLinks">
-        <a (click)="scrollToSection(link.href)" class="mobile-nav-link">{{ link.name }}</a>
+        <a [href]="link.href" (click)="scrollToSection(link.href, $event)" class="mobile-nav-link">{{ link.name }}</a>
       </li>
     </ul>
   </div>

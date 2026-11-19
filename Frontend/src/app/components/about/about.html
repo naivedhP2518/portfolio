@@ -3,7 +3,7 @@
     <div class="about-grid">
       <div #aboutImage class="about-image-container">
         <div class="image-reveal">
-          <img *ngIf="profileImage" [src]="profileImage" alt="Naivedh Patel" class="profile-image">
+          <img *ngIf="profileImage" [src]="profileImage" alt="Portrait of Naivedh Patel" class="profile-image" loading="lazy" decoding="async">
           <div *ngIf="!profileImage" class="image-placeholder glass">
             <lucide-icon [name]="UserIcon" size="64" class="placeholder-icon"></lucide-icon>
           </div>

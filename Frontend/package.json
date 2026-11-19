@@ -1,6 +1,7 @@
 {
   "name": "portfolio-app",
   "version": "0.0.0",
+  "description": "Naivedh Patel | Full Stack Developer portfolio",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,11 +19,9 @@
     "@angular/forms": "^21.2.0",
     "@angular/platform-browser": "^21.2.0",
     "@angular/router": "^21.2.0",
-    "@types/three": "^0.183.1",
     "gsap": "^3.14.2",
     "lucide-angular": "^0.577.0",
     "rxjs": "~7.8.0",
-    "three": "^0.183.2",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

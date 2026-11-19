@@ -1,6 +1,6 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, Menu, X, Github, Linkedin, MousePointer2 } from 'lucide-angular';
+import { LucideAngularModule, Menu, X, Github, MousePointer2 } from 'lucide-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +13,6 @@ export class Navbar {
   readonly MenuIcon = Menu;
   readonly XIcon = X;
   readonly GithubIcon = Github;
-  readonly LinkedinIcon = Linkedin;
   readonly PointerIcon = MousePointer2;
 
   isScrolled = signal(false);
@@ -36,7 +35,8 @@ export class Navbar {
     this.isMenuOpen.update(v => !v);
   }
 
-  scrollToSection(sectionId: string) {
+  scrollToSection(sectionId: string, event?: MouseEvent) {
+    event?.preventDefault();
     this.isMenuOpen.set(false);
     const element = document.querySelector(sectionId);
     if (element) {
