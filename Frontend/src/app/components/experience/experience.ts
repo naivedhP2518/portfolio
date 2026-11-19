@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, Calendar, MapPin, Code, Video, GraduationCap, School, BookOpen } from 'lucide-angular';
+import { LucideAngularModule, Calendar, MapPin, Code, GraduationCap, School, BookOpen } from 'lucide-angular';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LoadingService } from '../../services/loading.service';
@@ -19,7 +19,6 @@ export class Experience implements OnInit, AfterViewInit {
   readonly CalendarIcon = Calendar;
   readonly MapIcon = MapPin;
   readonly CodeIcon = Code;
-  readonly VideoIcon = Video;
   readonly GradIcon = GraduationCap;
   readonly SchoolIcon = School;
   readonly BookIcon = BookOpen;
@@ -31,7 +30,6 @@ export class Experience implements OnInit, AfterViewInit {
 
   private getIconForRole(role: string, company: string): any {
     const combined = `${role} ${company}`.toLowerCase();
-    if (combined.includes('video')) return this.VideoIcon;
     if (combined.includes('bachelor') || combined.includes('engineering') || combined.includes('institute')) return this.GradIcon;
     if (combined.includes('hsce') || combined.includes('boarding')) return this.SchoolIcon;
     if (combined.includes('ssce') || combined.includes('school')) return this.BookIcon;
@@ -64,19 +62,6 @@ export class Experience implements OnInit, AfterViewInit {
         'Built responsive and interactive web applications.',
         'Designed modern UI layouts with smooth user experience.',
         'Worked on multiple real-world inspired projects.'
-      ]
-    },
-    {
-      company: 'Video Editing',
-      role: 'Modern Video Editor',
-      location: 'YouTube & Instagram',
-      duration: 'Ongoing',
-      icon: this.VideoIcon,
-      description: 'Creating trending and high-quality digital content for social media.',
-      highlights: [
-        'Editing modern & trending videos for YouTube and Instagram.',
-        'Specialized in devotional, aesthetic, and cinematic edits.',
-        'Full workflow: clipping, transitions, effects, color correction & export.'
       ]
     },
     {

@@ -16,16 +16,6 @@ export interface ProjectItem {
   featured?: boolean;
 }
 
-export interface GalleryItem {
-  _id?: string;
-  title: string;
-  category: string;
-  size: 'small' | 'medium' | 'large';
-  image?: string;
-  video?: string;
-  order?: number;
-}
-
 export interface ExperienceItem {
   _id?: string;
   company: string;
@@ -108,37 +98,6 @@ export class ApiService {
 
   deleteProject(id: string, adminKey: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/projects/${id}`, {
-      headers: this.getAdminHeaders(adminKey),
-    });
-  }
-
-  // Gallery / Images Section API (Public)
-  getGallery(): Observable<{ success: boolean; data: GalleryItem[] }> {
-    return this.http
-      .get<{ success: boolean; data: GalleryItem[] }>(`${this.apiUrl}/gallery`)
-      .pipe(
-        catchError((err) => {
-          console.warn('Backend API unavailable, using local gallery fallback:', err);
-          return of({ success: false, data: [] });
-        })
-      );
-  }
-
-  // Gallery API (Admin)
-  createGalleryItem(item: Partial<GalleryItem>, adminKey: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/gallery`, item, {
-      headers: this.getAdminHeaders(adminKey),
-    });
-  }
-
-  updateGalleryItem(id: string, item: Partial<GalleryItem>, adminKey: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/gallery/${id}`, item, {
-      headers: this.getAdminHeaders(adminKey),
-    });
-  }
-
-  deleteGalleryItem(id: string, adminKey: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/gallery/${id}`, {
       headers: this.getAdminHeaders(adminKey),
     });
   }

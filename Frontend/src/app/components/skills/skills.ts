@@ -40,18 +40,12 @@ export class Skills implements OnInit, AfterViewInit {
 
   // Part 2: Professional Tools & Software
   professionalTools: SkillItem[] = [
-    { name: 'Photoshop', level: 85, category: 'Design Tool' },
-    { name: 'Premiere Pro', level: 80, category: 'Video Editing' },
-    { name: 'After Effects', level: 82, category: 'Motion Graphics' },
-    { name: 'DaVinci Resolve', level: 85, category: 'Color & Edit' },
-    { name: 'Video Editing', level: 92, category: 'Creative' },
     { name: 'Git & GitHub', level: 90, category: 'Version Control' },
     { name: 'VS Code', level: 95, category: 'IDE' },
     { name: 'Figma', level: 88, category: 'UI Prototyping' },
     { name: 'Postman', level: 85, category: 'API Testing' },
     { name: 'Vercel', level: 88, category: 'Deployment' },
     { name: 'Docker', level: 75, category: 'DevOps' },
-    { name: 'Canva', level: 90, category: 'Graphics' }
   ];
 
   // Duplicated tracks for continuous seamless infinite marquee loop

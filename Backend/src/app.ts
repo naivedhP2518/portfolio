@@ -5,7 +5,6 @@ import path from 'path';
 import contactRoutes from './routes/contact.routes.js';
 import projectRoutes from './routes/project.routes.js';
 import experienceRoutes from './routes/experience.routes.js';
-import galleryRoutes from './routes/gallery.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -45,7 +44,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve Uploads Directory statically for images & videos
+// Serve uploaded project images statically
 const uploadDir = path.join(process.cwd(), 'uploads');
 app.use('/uploads', express.static(uploadDir));
 
@@ -62,7 +61,6 @@ app.get('/api/health', (req: Request, res: Response) => {
 app.use('/api/contact', contactRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/experience', experienceRoutes);
-app.use('/api/gallery', galleryRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
 

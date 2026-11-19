@@ -1,7 +1,7 @@
 #  Naivedh Patel | Portfolio
 
 <div align="center">
-  <h3>Full-Stack Developer | Video Editor | UI/UX Designer</h3>
+  <h3>Full-Stack Developer | UI/UX Designer</h3>
 
 
 [![Website](https://img.shields.io/badge/Website-Live-brightgreen?style=for-the-badge&logo=google-chrome&logoColor=white)](https://portfolio-beta-five-50.vercel.app/)
@@ -13,12 +13,11 @@
 ---
 
 ## 🌟 About Me
-I am a passionate creator specializing in building premium digital experiences. From high-performance web applications to high-quality video content, I focus on delivering modern, responsive, and user-centric solutions.
+I am a passionate creator specializing in building premium digital experiences. I focus on delivering modern, responsive, and user-centric web applications.
 
 ### 🛠️ Core Expertise
 - **Web Development**: Building clean, reactive apps using **Angular 21** and modern CSS architectures.
 - **Visual Design**: Specialized in **UI/UX Design** with a focus on glassmorphism and modern aesthetics.
-- **Creative Media**: Professional **Video Editing** and digital content creation for social platforms.
 - **3D & Animations**: Expert usage of **GSAP** and **Three.js** for immersive web experiences.
 
 ---

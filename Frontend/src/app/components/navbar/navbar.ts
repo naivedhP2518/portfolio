@@ -24,7 +24,6 @@ export class Navbar {
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Gallery', href: '#portfolio' },
     { name: 'Contact', href: '#contact' }
   ];
 

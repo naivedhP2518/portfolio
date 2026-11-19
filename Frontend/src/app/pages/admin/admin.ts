@@ -17,15 +17,13 @@ import {
   Github,
   Upload,
   Image as ImageIcon,
-  Video as VideoIcon,
   CheckCircle,
   AlertCircle,
   ArrowLeft,
   RefreshCw,
   Layers,
-  Sparkles,
 } from 'lucide-angular';
-import { ApiService, ProjectItem, GalleryItem } from '../../services/api.service';
+import { ApiService, ProjectItem } from '../../services/api.service';
 
 @Component({
   selector: 'app-admin',
@@ -49,13 +47,11 @@ export class AdminComponent implements OnInit {
   readonly GithubIcon = Github;
   readonly UploadIcon = Upload;
   readonly ImageIcon = ImageIcon;
-  readonly VideoIcon = VideoIcon;
   readonly CheckCircleIcon = CheckCircle;
   readonly AlertCircleIcon = AlertCircle;
   readonly ArrowLeftIcon = ArrowLeft;
   readonly RefreshIcon = RefreshCw;
   readonly LayersIcon = Layers;
-  readonly SparklesIcon = Sparkles;
 
   // Auth State
   isAuthenticated = false;
@@ -65,8 +61,6 @@ export class AdminComponent implements OnInit {
   isVerifying = false;
   activeAdminKey = '';
 
-  // Tab State: 'projects' | 'gallery'
-  activeTab: 'projects' | 'gallery' = 'projects';
 
   // Projects State
   projects: ProjectItem[] = [];
@@ -85,20 +79,6 @@ export class AdminComponent implements OnInit {
     order: number;
     featured: boolean;
   } = this.getEmptyProjectForm();
-
-  // Gallery / Images Section State
-  galleryItems: GalleryItem[] = [];
-  isLoadingGallery = false;
-  isGalleryModalOpen = false;
-  galleryForm: {
-    _id?: string;
-    title: string;
-    category: string;
-    size: 'small' | 'medium' | 'large';
-    image: string;
-    video: string;
-    order: number;
-  } = this.getEmptyGalleryForm();
 
   // Upload status
   isUploading = false;
@@ -143,7 +123,6 @@ export class AdminComponent implements OnInit {
           this.activeAdminKey = key;
           sessionStorage.setItem('portfolio_admin_key', key);
           this.loadProjects();
-          this.loadGallery();
           this.showToast('Admin authenticated successfully', 'success');
         } else {
           this.authError = 'Invalid admin key. Access denied.';
@@ -181,22 +160,6 @@ export class AdminComponent implements OnInit {
       error: () => {
         this.isLoadingProjects = false;
         this.showToast('Could not load projects from server', 'error');
-      },
-    });
-  }
-
-  loadGallery() {
-    this.isLoadingGallery = true;
-    this.apiService.getGallery().subscribe({
-      next: (res) => {
-        this.isLoadingGallery = false;
-        if (res.data) {
-          this.galleryItems = res.data;
-        }
-      },
-      error: () => {
-        this.isLoadingGallery = false;
-        this.showToast('Could not load showcase items from server', 'error');
       },
     });
   }
@@ -361,161 +324,4 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  // ==========================================
-  // GALLERY / IMAGES SECTION MANAGEMENT
-  // ==========================================
-  getEmptyGalleryForm() {
-    return {
-      title: '',
-      category: 'Creative',
-      size: 'medium' as 'small' | 'medium' | 'large',
-      image: '',
-      video: '',
-      order: 1,
-    };
-  }
-
-  openAddGalleryModal() {
-    this.galleryForm = this.getEmptyGalleryForm();
-    this.galleryForm.order = this.galleryItems.length + 1;
-    this.isGalleryModalOpen = true;
-  }
-
-  openEditGalleryModal(item: GalleryItem) {
-    this.galleryForm = {
-      _id: item._id,
-      title: item.title,
-      category: item.category,
-      size: item.size || 'medium',
-      image: item.image || '',
-      video: item.video || '',
-      order: item.order ?? 0,
-    };
-    this.isGalleryModalOpen = true;
-  }
-
-  closeGalleryModal() {
-    this.isGalleryModalOpen = false;
-    this.galleryForm = this.getEmptyGalleryForm();
-  }
-
-  // Replace/Upload Image in Gallery Item
-  onGalleryImageUpload(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) return;
-
-    const file = input.files[0];
-    this.isUploading = true;
-    this.uploadProgressMsg = 'Uploading showcase image...';
-
-    this.apiService.uploadMedia(file, this.activeAdminKey).subscribe({
-      next: (res) => {
-        this.isUploading = false;
-        if (res.success && res.data?.url) {
-          this.galleryForm.image = res.data.url;
-          this.showToast('Image replaced/uploaded successfully!', 'success');
-        } else {
-          this.showToast('Image upload failed', 'error');
-        }
-      },
-      error: (err) => {
-        this.isUploading = false;
-        this.showToast(err.error?.message || 'Image upload error', 'error');
-      },
-    });
-  }
-
-  // Replace/Upload Video in Gallery Item
-  onGalleryVideoUpload(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) return;
-
-    const file = input.files[0];
-    this.isUploading = true;
-    this.uploadProgressMsg = 'Uploading showcase video (this may take a few moments)...';
-
-    this.apiService.uploadMedia(file, this.activeAdminKey).subscribe({
-      next: (res) => {
-        this.isUploading = false;
-        if (res.success && res.data?.url) {
-          this.galleryForm.video = res.data.url;
-          this.showToast('Video replaced/uploaded successfully!', 'success');
-        } else {
-          this.showToast('Video upload failed', 'error');
-        }
-      },
-      error: (err) => {
-        this.isUploading = false;
-        this.showToast(err.error?.message || 'Video upload error', 'error');
-      },
-    });
-  }
-
-  saveGalleryItem() {
-    if (!this.galleryForm.title.trim()) {
-      this.showToast('Title is required', 'error');
-      return;
-    }
-    if (!this.galleryForm.image && !this.galleryForm.video) {
-      this.showToast('Please provide or upload at least an Image or a Video', 'error');
-      return;
-    }
-
-    const payload: Partial<GalleryItem> = {
-      title: this.galleryForm.title.trim(),
-      category: this.galleryForm.category.trim(),
-      size: this.galleryForm.size,
-      image: this.galleryForm.image.trim(),
-      video: this.galleryForm.video.trim(),
-      order: Number(this.galleryForm.order) || 0,
-    };
-
-    if (this.galleryForm._id) {
-      // Update
-      this.apiService.updateGalleryItem(this.galleryForm._id, payload, this.activeAdminKey).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.showToast('Showcase item updated successfully!', 'success');
-            this.closeGalleryModal();
-            this.loadGallery();
-          }
-        },
-        error: (err) => {
-          this.showToast(err.error?.message || 'Failed to update item', 'error');
-        },
-      });
-    } else {
-      // Create
-      this.apiService.createGalleryItem(payload, this.activeAdminKey).subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.showToast('New showcase item added successfully!', 'success');
-            this.closeGalleryModal();
-            this.loadGallery();
-          }
-        },
-        error: (err) => {
-          this.showToast(err.error?.message || 'Failed to add item', 'error');
-        },
-      });
-    }
-  }
-
-  deleteGalleryItem(item: GalleryItem) {
-    if (!item._id) return;
-    const confirmDelete = confirm(`Are you sure you want to delete "${item.title}"?`);
-    if (!confirmDelete) return;
-
-    this.apiService.deleteGalleryItem(item._id, this.activeAdminKey).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.showToast('Showcase item deleted', 'success');
-          this.loadGallery();
-        }
-      },
-      error: (err) => {
-        this.showToast(err.error?.message || 'Failed to delete item', 'error');
-      },
-    });
-  }
 }

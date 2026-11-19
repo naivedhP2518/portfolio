@@ -4,7 +4,6 @@ dotenv.config();
 import mongoose from 'mongoose';
 import { Project } from '../models/Project.js';
 import { Experience } from '../models/Experience.js';
-import { Gallery } from '../models/Gallery.js';
 
 const initialProjects = [
   {
@@ -90,19 +89,6 @@ const initialExperiences = [
     order: 1,
   },
   {
-    company: 'Video Editing',
-    role: 'Modern Video Editor',
-    location: 'YouTube & Instagram',
-    duration: 'Ongoing',
-    description: 'Creating trending and high-quality digital content for social media.',
-    highlights: [
-      'Editing modern & trending videos for YouTube and Instagram.',
-      'Specialized in devotional, aesthetic, and cinematic edits.',
-      'Full workflow: clipping, transitions, effects, color correction & export.',
-    ],
-    order: 2,
-  },
-  {
     company: 'Parul Institute of Engineering & Technology',
     role: 'Bachelor of Technology',
     location: 'Vadodara',
@@ -134,76 +120,21 @@ const initialExperiences = [
   },
 ];
 
-const initialGallery = [
-  {
-    title: 'Lyrics Based Editing',
-    category: 'Editing',
-    size: 'large',
-    image: 'assets/CoverPage.png',
-    video: 'assets/SojaZara.mp4',
-    order: 1,
-  },
-  {
-    title: 'Rental Platform',
-    category: 'Full Stack',
-    size: 'small',
-    image: 'assets/Rental-web.png',
-    video: '',
-    order: 2,
-  },
-  {
-    title: 'Chat Interface',
-    category: 'Real-time',
-    size: 'medium',
-    image: 'assets/Chat-Web.png',
-    video: '',
-    order: 3,
-  },
-  {
-    title: 'Meme Based Video',
-    category: 'Comedy',
-    size: 'medium',
-    image: 'assets/CoverPage1.jpg',
-    video: 'assets/MemeBaseVideo.mp4',
-    order: 4,
-  },
-  {
-    title: 'Video Motion Graphic',
-    category: 'Creative',
-    size: 'large',
-    image: 'assets/Dwarka-img.png',
-    video: 'assets/Dwarka.mp4',
-    order: 5,
-  },
-  {
-    title: 'Mini Web App',
-    category: 'Frontend',
-    size: 'small',
-    image: 'assets/More-Projects.png',
-    video: '',
-    order: 6,
-  },
-];
-
 const seed = async () => {
   try {
     const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/portfolio';
     console.log('Connecting to MongoDB...');
     await mongoose.connect(mongoUri);
 
-    console.log('Clearing old collections (projects, experience, gallery)...');
+    console.log('Clearing old collections (projects, experience)...');
     await Project.deleteMany({});
     await Experience.deleteMany({});
-    await Gallery.deleteMany({});
 
     console.log('Seeding initial projects...');
     await Project.insertMany(initialProjects);
 
     console.log('Seeding initial experiences...');
     await Experience.insertMany(initialExperiences);
-
-    console.log('Seeding initial gallery items...');
-    await Gallery.insertMany(initialGallery);
 
     console.log('✅ Seeding completed successfully!');
     process.exit(0);
