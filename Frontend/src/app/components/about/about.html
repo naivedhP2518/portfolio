@@ -3,25 +3,27 @@
     <div class="about-grid">
       <div #aboutImage class="about-image-container">
         <div class="image-reveal">
-          <img *ngIf="profileImage" [src]="profileImage" alt="Naivedh Patel" class="profile-image">
+          <img *ngIf="profileImage" [src]="profileImage" alt="Portrait of Naivedh Patel" class="profile-image" loading="lazy" decoding="async">
           <div *ngIf="!profileImage" class="image-placeholder glass">
             <lucide-icon [name]="UserIcon" size="64" class="placeholder-icon"></lucide-icon>
-          </div>
-          <div #badge class="experience-badge glass">
-            <span class="count">3+</span>
-            <span class="label">Years of<br>Exp.</span>
           </div>
         </div>
       </div>
 
       <div #aboutContent class="about-content">
-        <h4 class="section-tag">About Me</h4>
-        <h2 class="section-title">Building Modern Web & <span class="text-gradient">Visual Content</span></h2>
+        <p class="section-tag">About Me</p>
+        <h2 class="section-title">Building Full Stack Web Applications</h2>
         <p class="about-text">
-          I'm Naivedh Patel, a Web Developer and Modern Video Editor. My passion lies in building clean, responsive, and user-friendly applications. I specialize in modern UI/UX design, problem-solving, and developing dynamic web platforms using modern technologies.
+          I’m Naivedh Patel, a B.Tech student building full stack web applications and growing through hands-on project work.
         </p>
         <p class="about-text">
-          I also create high-quality digital content and professional video edits for YouTube and Instagram, combining creativity with technical expertise to deliver impactful results. Always eager to learn, grow, and take on new challenges.
+          I work across responsive interfaces, API development, and data persistence with Angular, Node.js, Express, and MongoDB.
+        </p>
+        <p class="about-text">
+          I’m focused on writing maintainable code, solving practical problems, and learning through complete product builds.
+        </p>
+        <p class="about-text">
+          I’m looking for opportunities to contribute to a development team and keep growing as a Full Stack Developer.
         </p>
 
         <!-- Features Details -->

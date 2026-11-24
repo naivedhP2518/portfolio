@@ -6,7 +6,6 @@ import { About } from '../../components/about/about';
 import { Experience } from '../../components/experience/experience';
 import { Projects } from '../../components/projects/projects';
 import { Skills } from '../../components/skills/skills';
-import { Portfolio } from '../../components/portfolio/portfolio';
 import { Contact } from '../../components/contact/contact';
 import { Cursor } from '../../components/cursor/cursor';
 
@@ -21,7 +20,6 @@ import { Cursor } from '../../components/cursor/cursor';
     Experience,
     Projects,
     Skills,
-    Portfolio,
     Contact,
     Cursor
   ],

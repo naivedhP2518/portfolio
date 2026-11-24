@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, OnInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, ExternalLink, Github, Eye } from 'lucide-angular';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LoadingService } from '../../services/loading.service';
@@ -11,16 +10,13 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })
 export class Projects implements OnInit, AfterViewInit {
   @ViewChildren('projectCard') projectCards!: QueryList<ElementRef>;
 
-  readonly ExternalLinkIcon = ExternalLink;
-  readonly GithubIcon = Github;
-  readonly EyeIcon = Eye;
 
   constructor(
     private loadingService: LoadingService,
@@ -35,7 +31,23 @@ export class Projects implements OnInit, AfterViewInit {
     this.apiService.getProjects().subscribe({
       next: (res) => {
         if (res.success && res.data && res.data.length > 0) {
-          this.projects = res.data;
+          const curatedProjects = this.projects;
+          this.projects = res.data
+            .map((project) => {
+              const curated = curatedProjects.find((item) => item.title === project.title)
+                ?? (project.title === '10+ Small Projects'
+                  ? curatedProjects.find((item) => item.title === 'Small Projects')
+                  : undefined);
+              return curated
+                ? { ...project, ...curated, _id: project._id }
+                : { ...project, feature: project.feature || 'TODO: Add key feature or problem solved.' };
+            })
+            .sort((a, b) => {
+              const aOrder = curatedProjects.findIndex((item) => item.title === a.title);
+              const bOrder = curatedProjects.findIndex((item) => item.title === b.title);
+              return (aOrder < 0 ? Number.MAX_SAFE_INTEGER : aOrder)
+                - (bOrder < 0 ? Number.MAX_SAFE_INTEGER : bOrder);
+            });
           setTimeout(() => ScrollTrigger.refresh(), 200);
         }
       },
@@ -46,26 +58,19 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'SYNCUBE',
       category: 'Full Stack App',
-      description: 'A real-time synchronization and collaboration platform with secure user authentication, workspace management, and dynamic live updates.',
-      image: 'assets/SYNCUBE.png',
+      description: 'A full stack collaboration platform with authenticated access and workspace management. It keeps team activity synchronized through live updates.',
+      feature: 'Real-time workspace synchronization with secure user authentication.',
+      image: 'assets/SYNCUBE.webp',
       tools: ['Node.js', 'Express', 'TypeScript', 'MongoDB', 'Vercel'],
       link: 'https://syncube.vercel.app/login',
       github: 'https://github.com/naivedhP2518/SYNCUBE'
     },
     {
-      title: 'Hotel Website',
-      category: 'MEAN Stack',
-      description: 'Developed a modern hotel booking interface with premium UI design, smooth animations, and responsive layout.',
-      image: 'assets/hotel-web.png',
-      tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
-      link: 'https://the-grand-oasis-resort.vercel.app',
-      github: 'https://github.com/naivedhP2518/The-Grand-Oasis-Resort'
-    },
-    {
       title: 'Rental Website',
       category: 'MEAN Stack',
-      description: 'Built a complete rental platform with backend integration, database handling, and user interaction features.',
-      image: 'assets/Rental-web.png',
+      description: 'A full stack rental platform with backend and database integration. It brings rental listings and user interactions together in one application.',
+      feature: 'Connects rental listings to backend services and persistent data.',
+      image: 'assets/Rental-web.webp',
       tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
       link: 'https://urban-nest-flax.vercel.app',
       github: 'https://github.com/naivedhP2518/UrbanNest'
@@ -73,29 +78,43 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'Live Chat Website',
       category: 'Socket.IO Integration',
-      description: 'Created a real-time chat application using Socket.IO with instant messaging and dynamic updates.',
-      image: 'assets/Chat-Web.png',
+      description: 'A real-time chat application built with Angular and a Node.js backend. Messages update instantly through Socket.IO.',
+      feature: 'Instant message delivery using Socket.IO.',
+      image: 'assets/Chat-Web.webp',
       tools: ['Socket.io', 'Node.js', 'Express', 'Angular'],
       link: 'https://naivedhp2518.github.io/Under-Maintenance/',
       github: 'https://github.com/naivedhP2518/Chat-Web'
     },
     {
+      title: 'Hotel Website',
+      category: 'MEAN Stack',
+      description: 'A responsive hotel booking experience built with the MEAN stack. The interface presents resort information and booking flows in a polished layout.',
+      feature: 'Responsive booking interface for exploring a hotel resort.',
+      image: 'assets/hotel-web.webp',
+      tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
+      link: 'https://the-grand-oasis-resort.vercel.app',
+      github: 'https://github.com/naivedhP2518/The-Grand-Oasis-Resort'
+    },
+    {
       title: 'Headphone Website',
       category: 'Frontend & Canvas',
-      description: 'Designed a premium audio product landing page with interactive 3D canvas animations, glassmorphism UI, and kinetic mechanics.',
-      image: 'assets/headpnone.png',
+      description: 'An interactive product landing page for headphones, built with web technologies and canvas animation. It combines a responsive presentation with 3D visuals.',
+      feature: 'Interactive 3D product presentation in the browser.',
+      image: 'assets/headpnone.webp',
       tools: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
       link: 'https://naivedhp2518.github.io/Aurora-X-Headphone/',
       github: 'https://github.com/naivedhP2518/Aurora-X-Headphone'
     },
     {
-      title: '10+ Small Projects',
+      title: 'Small Projects',
       category: 'Frontend Only',
-      description: 'Including UI-based apps, tools, and mini web applications showcasing various developer skills.',
-      image: 'assets/More-Projects.png',
+      description: 'A collection of small frontend projects and web apps, brought together in one place.',
+      feature: 'Explore a range of small web projects from one collection.',
+      image: 'assets/More-Projects.webp',
       tools: ['HTML', 'CSS', 'JavaScript'],
       link: 'https://naivedhp2518.github.io/Small-Projects/index.html',
-      github: 'https://github.com/naivedhP2518?tab=repositories'
+      github: '',
+      githubOptional: true
     }
   ];
 

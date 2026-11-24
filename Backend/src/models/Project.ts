@@ -4,10 +4,12 @@ export interface IProject extends Document {
   title: string;
   category: string;
   description: string;
+  feature?: string;
   image: string;
   tools: string[];
   link?: string;
   github?: string;
+  githubOptional?: boolean;
   order: number;
   featured: boolean;
   createdAt: Date;
@@ -31,6 +33,10 @@ const ProjectSchema: Schema = new Schema(
       required: [true, 'Description is required'],
       trim: true,
     },
+    feature: {
+      type: String,
+      trim: true,
+    },
     image: {
       type: String,
       required: [true, 'Image path or URL is required'],
@@ -47,6 +53,10 @@ const ProjectSchema: Schema = new Schema(
     github: {
       type: String,
       trim: true,
+    },
+    githubOptional: {
+      type: Boolean,
+      default: false,
     },
     order: {
       type: Number,

@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter for images and videos
+// Accept image files for project screenshots
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const allowedMimes = [
     'image/jpeg',
@@ -37,16 +37,12 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilt
     'image/webp',
     'image/gif',
     'image/svg+xml',
-    'video/mp4',
-    'video/webm',
-    'video/ogg',
-    'video/quicktime',
   ];
 
   if (allowedMimes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error(`Unsupported file type: ${file.mimetype}. Allowed: Images (JPG, PNG, WebP, GIF, SVG) and Videos (MP4, WebM, QuickTime).`));
+    cb(new Error(`Unsupported file type: ${file.mimetype}. Allowed: Images (JPG, PNG, WebP, GIF, SVG).`));
   }
 };
 
@@ -54,7 +50,7 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 100 * 1024 * 1024, // 100MB limit to allow high-res videos
+    fileSize: 10 * 1024 * 1024, // 10MB image upload limit
   },
 });
 
@@ -68,13 +64,12 @@ router.post('/', requireAdminKey, upload.single('file'), async (req: Request, re
     return;
   }
 
-  const isVideo = req.file.mimetype.startsWith('video/');
 
   try {
     // If Cloudinary keys are configured, stream to Cloudinary CDN
     if (isCloudinaryConfigured) {
       const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-        resource_type: 'auto',
+        resource_type: 'image',
         folder: 'portfolio',
         use_filename: true,
         unique_filename: true,
@@ -87,13 +82,13 @@ router.post('/', requireAdminKey, upload.single('file'), async (req: Request, re
 
       res.status(200).json({
         success: true,
-        message: `${isVideo ? 'Video' : 'Image'} uploaded to Cloudinary CDN successfully.`,
+        message: 'Image uploaded to Cloudinary CDN successfully.',
         data: {
           url: uploadResult.secure_url,
           publicId: uploadResult.public_id,
           format: uploadResult.format,
           bytes: uploadResult.bytes,
-          type: isVideo ? 'video' : 'image',
+          type: 'image',
           provider: 'cloudinary',
         },
       });
@@ -104,13 +99,13 @@ router.post('/', requireAdminKey, upload.single('file'), async (req: Request, re
     const localUrl = `/uploads/${req.file.filename}`;
     res.status(200).json({
       success: true,
-      message: `${isVideo ? 'Video' : 'Image'} stored locally. (Tip: Add Cloudinary keys to .env for cloud CDN storage)`,
+      message: 'Image stored locally. (Tip: Add Cloudinary keys to .env for cloud CDN storage)',
       data: {
         url: localUrl,
         filename: req.file.filename,
         originalName: req.file.originalname,
         size: req.file.size,
-        type: isVideo ? 'video' : 'image',
+        type: 'image',
         provider: 'local',
       },
     });
@@ -124,7 +119,7 @@ router.post('/', requireAdminKey, upload.single('file'), async (req: Request, re
 
     res.status(500).json({
       success: false,
-      message: error.message || 'Failed to upload media.',
+      message: error.message || 'Failed to upload image.',
     });
   }
 });

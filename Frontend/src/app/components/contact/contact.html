@@ -1,36 +1,42 @@
 <section id="contact" class="contact-section section-padding">
   <div class="container">
     <div class="section-header">
-      <h4 class="section-tag">Get In Touch</h4>
-      <h2 class="section-title">Let's Create <span class="text-gradient">Something Great</span></h2>
+      <p class="section-tag">Get In Touch</p>
+      <h2 class="section-title">Let’s Build <span class="text-gradient">Something Together</span></h2>
     </div>
 
     <div class="contact-grid">
       <div class="contact-info">
         <h3 class="info-title">Contact Information</h3>
-        <p class="info-desc">Feel free to reach out for collaborations, project inquiries, or just to say hi!</p>
+        <p class="info-desc">Open to full stack development roles, collaborations, and project conversations.</p>
 
         <div class="info-cards">
-          <a *ngFor="let info of contactInfo" [href]="info.link" class="info-card glass">
-            <div class="icon-box">
-              <lucide-icon [name]="info.icon" size="20"></lucide-icon>
-            </div>
-            <div class="details">
-              <span class="label">{{ info.label }}</span>
-              <span class="value">{{ info.value }}</span>
-            </div>
-          </a>
+          <ng-container *ngFor="let info of contactInfo">
+            <a *ngIf="info.link; else placeholderContact" [href]="info.link" [attr.target]="info.link.startsWith('https://') ? '_blank' : null" rel="noopener noreferrer" class="info-card glass">
+              <div class="icon-box"><lucide-icon [name]="info.icon" size="20"></lucide-icon></div>
+              <div class="details"><span class="label">{{ info.label }}</span><span class="value">{{ info.value }}</span></div>
+            </a>
+            <ng-template #placeholderContact>
+              <div class="info-card glass">
+                <div class="icon-box"><lucide-icon [name]="info.icon" size="20"></lucide-icon></div>
+                <div class="details"><span class="label">{{ info.label }}</span><span class="value">{{ info.value }}</span></div>
+              </div>
+            </ng-template>
+          </ng-container>
         </div>
 
-        <div class="availability glass">
-          <div class="status-dot-container">
-            <div class="status-dot"></div>
-          </div>
-          <span>Available for new opportunities</span>
-        </div>
+        <a class="btn btn-primary resume-button" href="/Naivedh_Patel_Resume.pdf" download="Naivedh_Patel_Resume.pdf">Download Resume</a>
       </div>
 
       <div class="contact-form-container glass">
+        <div *ngIf="isSuccess" class="form-feedback success-feedback" role="status">
+          <lucide-icon [name]="SuccessIcon" size="22"></lucide-icon>
+          <div class="feedback-text"><h4>Message sent</h4><p>Thanks for reaching out. I’ll get back to you soon.</p></div>
+        </div>
+        <div *ngIf="isError" class="form-feedback error-feedback" role="alert">
+          <lucide-icon [name]="ErrorIcon" size="22"></lucide-icon>
+          <div class="feedback-text"><h4>Message could not be sent</h4><p>Please try again later or use the contact details above.</p></div>
+        </div>
         <form #contactForm="ngForm" (ngSubmit)="onSubmit()" class="contact-form">
           <div class="form-group">
             <label for="name">Your Name</label>
@@ -59,7 +65,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        <p>&copy; By Naivedh Patel</p>
+        <p>&copy; Naivedh Patel · Full Stack Developer</p>
       </div>
     </div>
   </footer>

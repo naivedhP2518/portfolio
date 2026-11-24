@@ -8,33 +8,14 @@ export interface ProjectItem {
   title: string;
   category: string;
   description: string;
+  feature?: string;
   image: string;
   tools: string[];
   link?: string;
   github?: string;
+  githubOptional?: boolean;
   order?: number;
   featured?: boolean;
-}
-
-export interface GalleryItem {
-  _id?: string;
-  title: string;
-  category: string;
-  size: 'small' | 'medium' | 'large';
-  image?: string;
-  video?: string;
-  order?: number;
-}
-
-export interface ExperienceItem {
-  _id?: string;
-  company: string;
-  role: string;
-  location: string;
-  duration: string;
-  description: string;
-  highlights: string[];
-  order?: number;
 }
 
 export interface ContactPayload {
@@ -64,7 +45,8 @@ export class ApiService {
       const backendBase = this.apiUrl.replace(/\/api\/?$/, '');
       return `${backendBase}${url}`;
     }
-    return url;
+    const optimizedAssets = /^(assets\/(?:Chat-Web|More-Projects|Naivedh|Rental-web|SYNCUBE|headpnone|hotel-web))\.png$/;
+    return url.replace(optimizedAssets, '$1.webp');
   }
 
   // Admin Verification
@@ -112,37 +94,6 @@ export class ApiService {
     });
   }
 
-  // Gallery / Images Section API (Public)
-  getGallery(): Observable<{ success: boolean; data: GalleryItem[] }> {
-    return this.http
-      .get<{ success: boolean; data: GalleryItem[] }>(`${this.apiUrl}/gallery`)
-      .pipe(
-        catchError((err) => {
-          console.warn('Backend API unavailable, using local gallery fallback:', err);
-          return of({ success: false, data: [] });
-        })
-      );
-  }
-
-  // Gallery API (Admin)
-  createGalleryItem(item: Partial<GalleryItem>, adminKey: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/gallery`, item, {
-      headers: this.getAdminHeaders(adminKey),
-    });
-  }
-
-  updateGalleryItem(id: string, item: Partial<GalleryItem>, adminKey: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/gallery/${id}`, item, {
-      headers: this.getAdminHeaders(adminKey),
-    });
-  }
-
-  deleteGalleryItem(id: string, adminKey: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/gallery/${id}`, {
-      headers: this.getAdminHeaders(adminKey),
-    });
-  }
-
   // Media Upload (Admin)
   uploadMedia(file: File, adminKey: string): Observable<{ success: boolean; message?: string; data?: { url: string; type: string } }> {
     const formData = new FormData();
@@ -154,15 +105,5 @@ export class ApiService {
     );
   }
 
-  // Experience API
-  getExperiences(): Observable<{ success: boolean; data: ExperienceItem[] }> {
-    return this.http
-      .get<{ success: boolean; data: ExperienceItem[] }>(`${this.apiUrl}/experience`)
-      .pipe(
-        catchError((err) => {
-          console.warn('Backend API unavailable, using local experience fallback:', err);
-          return of({ success: false, data: [] });
-        })
-      );
-  }
+
 }

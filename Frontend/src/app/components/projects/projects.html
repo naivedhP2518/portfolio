@@ -1,45 +1,31 @@
 <section id="projects" class="projects-section section-padding">
   <div class="container">
     <div class="section-header">
-      <h4 class="section-tag">Featured Works</h4>
-      <h2 class="section-title">Creative <span class="text-gradient">Showcase</span></h2>
+      <h2 class="section-title">Full Stack <span class="text-gradient">Projects</span></h2>
     </div>
-    <br>
 
     <div class="projects-grid">
-      <div *ngFor="let project of projects" class="project-card glass" #projectCard>
+      <article *ngFor="let project of projects" class="project-card glass" #projectCard>
         <div class="project-image-wrapper">
-          <img *ngIf="project.image" [src]="resolveUrl(project.image)" [alt]="project.title" class="project-image">
-          <div *ngIf="!project.image" class="image-placeholder">
-            <lucide-icon [name]="EyeIcon" size="48" class="icon-eye"></lucide-icon>
-          </div>
-          <div class="project-overlay">
-            <div class="overlay-content">
-              <a [href]="project.link" target="_blank" class="overlay-btn">
-                <lucide-icon [name]="ExternalLinkIcon" size="20"></lucide-icon>
-              </a>
-            </div>
-          </div>
+          <img *ngIf="project.image" [src]="resolveUrl(project.image)" [alt]="project.title + ' application screenshot'" class="project-image" loading="lazy" decoding="async">
           <div class="category-pill">{{ project.category }}</div>
         </div>
 
         <div class="project-info">
           <h3>{{ project.title }}</h3>
           <p>{{ project.description }}</p>
-          
-          <div class="project-footer">
-            <div class="tools-list">
-              <span *ngFor="let tool of project.tools" class="tool-tag">{{ tool }}</span>
-            </div>
-            <div class="project-links">
-              <a [href]="project.github" target="_blank" class="link-icon">
-                <lucide-icon [name]="GithubIcon" size="18"></lucide-icon>
-              </a>
-            </div>
+          <div class="tools-list" aria-label="Technology stack">
+            <span *ngFor="let tool of project.tools" class="tool-tag">{{ tool }}</span>
+          </div>
+          <p class="project-feature"><strong>Key feature:</strong> {{ project.feature || 'TODO: Add key feature or problem solved.' }}</p>
+          <div class="project-actions">
+            <a *ngIf="project.link; else missingDemo" [href]="project.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary project-action">Live Demo</a>
+            <ng-template #missingDemo><span class="project-todo">TODO: Add Live Demo URL</span></ng-template>
+            <a *ngIf="project.github; else missingGithub" [href]="project.github" target="_blank" rel="noopener noreferrer" class="btn btn-outline project-action">GitHub</a>
+            <ng-template #missingGithub><span *ngIf="!project.githubOptional" class="project-todo">TODO: Add GitHub URL</span></ng-template>
           </div>
         </div>
-      </div>
+      </article>
     </div>
-
   </div>
 </section>

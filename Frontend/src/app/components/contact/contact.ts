@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, Mail, Phone, MapPin, Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-angular';
+import { LucideAngularModule, Mail, Github, Linkedin, Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-angular';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -13,8 +13,8 @@ import { ApiService } from '../../services/api.service';
 })
 export class Contact {
   readonly MailIcon = Mail;
-  readonly PhoneIcon = Phone;
-  readonly MapIcon = MapPin;
+  readonly GithubIcon = Github;
+  readonly LinkedinIcon = Linkedin;
   readonly SendIcon = Send;
   readonly MsgIcon = MessageSquare;
   readonly SuccessIcon = CheckCircle;
@@ -30,20 +30,20 @@ export class Contact {
     {
       icon: this.MailIcon,
       label: 'Email',
-      value: 'naivedhpatel25@gmail.com',
-      link: 'mailto:naivedhpatel25@gmail.com'
+      value: 'naivedhpatel2514@gmail.com',
+      link: 'mailto:naivedhpatel2514@gmail.com'
     },
     {
-      icon: this.PhoneIcon,
-      label: 'Phone',
-      value: '+91 9313096998',
-      link: 'tel:+919313096998'
+      icon: this.GithubIcon,
+      label: 'GitHub',
+      value: 'github.com/naivedhP2518',
+      link: 'https://github.com/naivedhP2518'
     },
     {
-      icon: this.MapIcon,
-      label: 'Location',
-      value: 'Nandanvan Society, Vadodara',
-      link: 'https://maps.app.goo.gl/rQ3MCA8PQb7Neswt7'
+      icon: this.LinkedinIcon,
+      label: 'LinkedIn',
+      value: 'linkedin.com/in/naivedh2518',
+      link: 'https://www.linkedin.com/in/naivedh2518/'
     }
   ];
 
@@ -69,10 +69,9 @@ export class Contact {
         // Reset success message after 5 seconds
         setTimeout(() => (this.isSuccess = false), 5000);
       },
-      error: (error) => {
+      error: () => {
         this.isSubmitting = false;
         this.isError = true;
-        console.error('Contact submission error:', error);
       }
     });
   }

@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, User, Code2, Palette, Globe } from 'lucide-angular';
+import { LucideAngularModule, User, Code2, Globe } from 'lucide-angular';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Subscription } from 'rxjs';
@@ -21,11 +21,10 @@ export class About implements AfterViewInit, OnDestroy {
   @ViewChild('aboutImage') aboutImage!: ElementRef;
   @ViewChild('aboutContent') aboutContent!: ElementRef;
 
-  profileImage = 'assets/Naivedh.png'; 
+  profileImage = 'assets/Naivedh.webp';
 
   readonly UserIcon = User;
   readonly CodeIcon = Code2;
-  readonly PaletteIcon = Palette;
   readonly GlobeIcon = Globe;
 
   features = [
@@ -35,14 +34,9 @@ export class About implements AfterViewInit, OnDestroy {
       description: 'Building clean, responsive, and user-friendly applications using modern technologies.'
     },
     {
-      icon: Palette,
-      title: 'Video Editing',
-      description: 'Creating high-quality digital content and professional video edits for social media.'
-    },
-    {
       icon: Globe,
-      title: 'UI/UX Design',
-      description: 'Specializing in modern UI/UX design, problem-solving, and dynamic web platforms.'
+      title: 'Backend Development',
+      description: 'Building APIs and connecting application features to persistent data with Node.js, Express, and MongoDB.'
     }
   ];
 

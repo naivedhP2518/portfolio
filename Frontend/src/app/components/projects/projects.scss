@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2.5rem;
+  margin-top: 3rem;
   margin-bottom: 4rem;
 
   @media (max-width: 480px) {
@@ -132,8 +133,8 @@
     color: var(--text-muted);
     font-size: 0.95rem;
     line-height: 1.6;
-    margin-bottom: 2rem;
-    flex-grow: 1;
+    margin-bottom: 1rem;
+    flex-grow: 0;
   }
 }
 
@@ -153,8 +154,9 @@
 
 .tool-tag {
   font-size: 0.7rem;
-  color: #ffba02;
-  background: rgba(108, 99, 255, 0.1);
+  color: #785400;
+  background: rgba(244, 208, 111, 0.18);
+  font-weight: 600;
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
 }
@@ -175,4 +177,44 @@
 
 .view-more {
   text-align: center;
+}
+
+.project-feature {
+  margin: 1rem 0 1.5rem !important;
+  font-size: 0.88rem !important;
+  color: var(--text-muted);
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.project-action {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+}
+
+.project-todo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0.4rem 0.75rem;
+  border: 1px dashed var(--glass-border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.resume-button {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  text-decoration: none;
 }
