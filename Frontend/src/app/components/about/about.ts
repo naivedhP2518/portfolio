@@ -61,6 +61,8 @@ export class About implements AfterViewInit, OnDestroy {
   }
 
   private initAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const section = this.aboutSection.nativeElement;
     const image = this.aboutImage.nativeElement;
     const content = this.aboutContent.nativeElement;
@@ -95,16 +97,16 @@ export class About implements AfterViewInit, OnDestroy {
     });
 
     // We keep the cards separate and simple
-    gsap.from('.feature-card', {
-      y: 20,
-      opacity: 0,
+    gsap.fromTo(content.querySelectorAll('.feature-card'), { y: 18, autoAlpha: 0 }, {
+      y: 0,
+      autoAlpha: 1,
       duration: 0.6,
       stagger: 0.1,
       ease: 'power2.out',
       scrollTrigger: {
-        trigger: '.features-grid',
+        trigger: content.querySelector('.features-grid'),
         start: 'top 90%',
-        toggleActions: 'play none none none'
+        once: true,
       }
     });
   }

@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, Mail, Github, Linkedin, Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-angular';
 import { ApiService } from '../../services/api.service';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { LoadingService } from '../../services/loading.service';
+import { Subscription } from 'rxjs';
+
+gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-contact',
@@ -11,7 +17,8 @@ import { ApiService } from '../../services/api.service';
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })
-export class Contact {
+export class Contact implements AfterViewInit, OnDestroy {
+  @ViewChild('contactSection') contactSection!: ElementRef<HTMLElement>;
   readonly MailIcon = Mail;
   readonly GithubIcon = Github;
   readonly LinkedinIcon = Linkedin;
@@ -24,7 +31,36 @@ export class Contact {
   isSuccess = false;
   isError = false;
 
-  constructor(private apiService: ApiService) {}
+  private loadingSub?: Subscription;
+
+  constructor(private apiService: ApiService, private loadingService: LoadingService) {}
+
+  ngAfterViewInit() {
+    this.loadingSub = this.loadingService.isLoaded$.subscribe((isLoaded) => {
+      if (isLoaded) setTimeout(() => this.initAnimations(), 500);
+    });
+  }
+
+  ngOnDestroy() {
+    this.loadingSub?.unsubscribe();
+    ScrollTrigger.getAll().forEach((trigger) => {
+      if (trigger.trigger instanceof HTMLElement && trigger.trigger.closest('app-contact')) trigger.kill();
+    });
+  }
+
+  private initAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const section = this.contactSection.nativeElement;
+    const items = section.querySelectorAll('.contact-info, .contact-form-container');
+    gsap.fromTo(items, { y: 22, autoAlpha: 0 }, {
+      y: 0,
+      autoAlpha: 1,
+      duration: 0.65,
+      stagger: 0.12,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: section.querySelector('.contact-grid'), start: 'top 82%', once: true },
+    });
+  }
 
   contactInfo = [
     {

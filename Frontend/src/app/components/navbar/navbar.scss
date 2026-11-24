@@ -12,7 +12,7 @@
   &.scrolled {
     height: 70px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    background: rgba(255, 248, 240, 0.8);
+    background: color-mix(in srgb, var(--bg-color) 88%, transparent);
     backdrop-filter: blur(10px);
   }
 }
@@ -77,7 +77,56 @@
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
+}
+
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--text-color) 12%, transparent);
+  border-radius: 50%;
+  background: #202224;
+  color: #f8f7f3;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 220ms ease, background-color 320ms ease, color 320ms ease, box-shadow 220ms ease;
+
+  lucide-icon {
+    display: inline-flex;
+    animation: theme-icon-arrive 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  &.is-dark {
+    background: #f3f1ec;
+    color: #202224;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.18);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+  }
+}
+
+@keyframes theme-icon-arrive {
+  from { opacity: 0; transform: rotate(-35deg) scale(0.65); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .theme-toggle lucide-icon {
+    animation: none;
+    transition: none;
+  }
 }
 
 .social-icon {

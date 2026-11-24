@@ -13,9 +13,9 @@
     </ul>
 
     <div class="nav-actions">
-      <a href="https://github.com/naivedhP2518" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
-        <lucide-icon [name]="GithubIcon"></lucide-icon>
-      </a>
+      <button type="button" class="theme-toggle" [class.is-dark]="isDarkMode()" (click)="toggleTheme($event)" [attr.aria-label]="isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'" [attr.aria-pressed]="isDarkMode()" [title]="isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
+        <lucide-icon [name]="isDarkMode() ? SunIcon : MoonIcon" size="20"></lucide-icon>
+      </button>
       <button type="button" class="mobile-toggle" (click)="toggleMenu()" [attr.aria-label]="isMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'" [attr.aria-expanded]="isMenuOpen()" aria-controls="mobile-menu">
         <lucide-icon [name]="isMenuOpen() ? XIcon : MenuIcon"></lucide-icon>
       </button>

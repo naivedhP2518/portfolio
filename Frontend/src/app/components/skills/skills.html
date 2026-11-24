@@ -1,23 +1,18 @@
 <section id="skills" class="skills-section section-padding">
   <div class="container">
     <div class="section-header text-center">
-      <p class="section-tag">Technical Proficiency</p>
-      <h2 class="section-title">Development <span class="text-gradient">Skills</span></h2>
+      <p class="section-tag">Technology</p>
+      <h2 class="section-title">Tools I use to build</h2>
+      <p class="section-intro">A practical toolkit for building responsive interfaces, APIs, and data-backed applications.</p>
     </div>
 
-    <div class="marquee-container skills-groups">
-      <div class="marquee-row-wrapper" *ngFor="let group of skillGroups">
-        <div class="row-header">
-          <h3 class="row-title">{{ group.name }}</h3>
-        </div>
-        <div class="marquee-wrapper fade-edges">
-          <div class="marquee-track skills-track">
-            <div *ngFor="let skill of group.skills" class="marquee-card glass">
-              <h4 class="card-title">{{ skill }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="skills-grid">
+      <article class="skill-group-card glass" *ngFor="let group of skillGroups">
+        <h3 class="row-title">{{ group.name }}</h3>
+        <ul class="skill-list">
+          <li *ngFor="let skill of group.skills">{{ skill }}</li>
+        </ul>
+      </article>
     </div>
   </div>
 </section>

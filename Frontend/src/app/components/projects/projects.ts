@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ElementRef, ViewChildren, QueryList, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })
-export class Projects implements OnInit, AfterViewInit {
+export class Projects implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('projectCard') projectCards!: QueryList<ElementRef>;
 
 
@@ -22,6 +22,13 @@ export class Projects implements OnInit, AfterViewInit {
     private loadingService: LoadingService,
     private apiService: ApiService
   ) {}
+
+  ngOnDestroy() {
+    gsap.killTweensOf(this.projectCards?.map((card) => card.nativeElement) ?? []);
+    ScrollTrigger.getAll().forEach((trigger) => {
+      if (trigger.trigger instanceof HTMLElement && trigger.trigger.closest('app-projects')) trigger.kill();
+    });
+  }
 
   resolveUrl(url?: string): string {
     return this.apiService.resolveMediaUrl(url);
@@ -58,7 +65,7 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'SYNCUBE',
       category: 'Full Stack App',
-      description: 'A full stack collaboration platform with authenticated access and workspace management. It keeps team activity synchronized through live updates.',
+      description: 'A collaborative workspace for teams to organize work, manage access, and stay in sync.',
       feature: 'Real-time workspace synchronization with secure user authentication.',
       image: 'assets/SYNCUBE.webp',
       tools: ['Node.js', 'Express', 'TypeScript', 'MongoDB', 'Vercel'],
@@ -68,7 +75,7 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'Rental Website',
       category: 'MEAN Stack',
-      description: 'A full stack rental platform with backend and database integration. It brings rental listings and user interactions together in one application.',
+      description: 'A property rental platform that brings listings and user workflows together in one responsive experience.',
       feature: 'Connects rental listings to backend services and persistent data.',
       image: 'assets/Rental-web.webp',
       tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
@@ -78,7 +85,7 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'Live Chat Website',
       category: 'Socket.IO Integration',
-      description: 'A real-time chat application built with Angular and a Node.js backend. Messages update instantly through Socket.IO.',
+      description: 'A real-time messaging application with an Angular interface and a Node.js backend.',
       feature: 'Instant message delivery using Socket.IO.',
       image: 'assets/Chat-Web.webp',
       tools: ['Socket.io', 'Node.js', 'Express', 'Angular'],
@@ -88,7 +95,7 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'Hotel Website',
       category: 'MEAN Stack',
-      description: 'A responsive hotel booking experience built with the MEAN stack. The interface presents resort information and booking flows in a polished layout.',
+      description: 'A responsive hotel website presenting resort information and a streamlined booking flow.',
       feature: 'Responsive booking interface for exploring a hotel resort.',
       image: 'assets/hotel-web.webp',
       tools: ['MongoDB', 'Express', 'Angular', 'Node.js'],
@@ -98,7 +105,7 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'Headphone Website',
       category: 'Frontend & Canvas',
-      description: 'An interactive product landing page for headphones, built with web technologies and canvas animation. It combines a responsive presentation with 3D visuals.',
+      description: 'An interactive headphone product page combining responsive web design with animated 3D visuals.',
       feature: 'Interactive 3D product presentation in the browser.',
       image: 'assets/headpnone.webp',
       tools: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
@@ -108,7 +115,7 @@ export class Projects implements OnInit, AfterViewInit {
     {
       title: 'Small Projects',
       category: 'Frontend Only',
-      description: 'A collection of small frontend projects and web apps, brought together in one place.',
+      description: 'A curated collection of smaller frontend experiments and web applications.',
       feature: 'Explore a range of small web projects from one collection.',
       image: 'assets/More-Projects.webp',
       tools: ['HTML', 'CSS', 'JavaScript'],
@@ -134,53 +141,20 @@ export class Projects implements OnInit, AfterViewInit {
   }
 
   private initAnimations() {
-    // Entrance Animation
-    gsap.fromTo('.project-card',
+    const cards = this.projectCards.map((card) => card.nativeElement);
+    const grid = document.querySelector('app-projects .projects-grid');
+    if (!cards.length || !grid || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    gsap.fromTo(cards,
+      { y: 28, autoAlpha: 0 },
       {
-        y: 100,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
+        y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.11, ease: 'power2.out',
         scrollTrigger: {
-          trigger: '.projects-grid',
-          start: 'top 85%',
-          toggleActions: 'play none none none'
+          trigger: grid,
+          start: 'top 82%',
+          once: true,
         }
       }
     );
-
-    // Hover 3D Tilt Effect
-    this.projectCards.forEach((cardRef) => {
-      const card = cardRef.nativeElement;
-
-      card.addEventListener('mousemove', (e: MouseEvent) => {
-        const { left, top, width, height } = card.getBoundingClientRect();
-        const x = (e.clientX - left) / width - 0.5;
-        const y = (e.clientY - top) / height - 0.5;
-
-        gsap.to(card, {
-          rotateY: x * 15,
-          rotateX: -y * 15,
-          scale: 1.02,
-          duration: 0.5,
-          ease: 'power2.out',
-        });
-      });
-
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          rotateY: 0,
-          rotateX: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: 'elastic.out(1, 0.5)',
-        });
-      });
-    });
   }
 }

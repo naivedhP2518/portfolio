@@ -30,6 +30,8 @@ export class Hero implements AfterViewInit {
   }
 
   initAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const tl = gsap.timeline();
 
     tl.from('.hero-title', {
@@ -59,8 +61,8 @@ export class Hero implements AfterViewInit {
 
     // Subtle background drift
     gsap.to(this.heroBg.nativeElement, {
-      backgroundPosition: '100% 100%',
-      duration: 20,
+      scale: 1.06,
+      duration: 16,
       repeat: -1,
       yoyo: true,
       ease: 'none'
