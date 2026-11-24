@@ -1,8 +1,9 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LoadingService } from '../../services/loading.service';
+import { Subscription } from 'rxjs';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +19,7 @@ interface SkillGroup {
   templateUrl: './skills.html',
   styleUrl: './skills.scss',
 })
-export class Skills implements AfterViewInit {
+export class Skills implements AfterViewInit, OnDestroy {
   skillGroups: SkillGroup[] = [
     { name: 'Frontend', skills: ['Angular', 'React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'SCSS', 'GSAP', 'Three.js'] },
     { name: 'Backend', skills: ['Node.js', 'Express.js', 'REST APIs', 'Socket.IO'] },
@@ -27,9 +28,10 @@ export class Skills implements AfterViewInit {
   ];
 
   constructor(private loadingService: LoadingService) {}
+  private loadingSub?: Subscription;
 
   ngAfterViewInit() {
-    this.loadingService.isLoaded$.subscribe((isLoaded: boolean) => {
+    this.loadingSub = this.loadingService.isLoaded$.subscribe((isLoaded: boolean) => {
       if (isLoaded) {
         setTimeout(() => {
           this.initAnimations();
@@ -40,19 +42,24 @@ export class Skills implements AfterViewInit {
     });
   }
 
+  ngOnDestroy() {
+    this.loadingSub?.unsubscribe();
+    ScrollTrigger.getAll().forEach((trigger) => {
+      if (trigger.trigger instanceof HTMLElement && trigger.trigger.closest('app-skills')) trigger.kill();
+    });
+  }
+
   private initAnimations() {
-    gsap.fromTo('.marquee-row-wrapper',
-      { y: 40, opacity: 0 },
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    gsap.fromTo('.skill-group-card',
+      { y: 24, autoAlpha: 0 },
       {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
+        y: 0, autoAlpha: 1, duration: 0.65, stagger: 0.12, ease: 'power2.out',
         scrollTrigger: {
-          trigger: '.marquee-container',
-          start: 'top 85%',
-          toggleActions: 'play none none none'
+          trigger: '.skills-grid',
+          start: 'top 82%',
+          once: true,
         }
       }
     );

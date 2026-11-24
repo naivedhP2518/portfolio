@@ -25,8 +25,8 @@
 .image-reveal {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/5;
-  border-radius: 20px;
+  aspect-ratio: 4/4.6;
+  border-radius: 22px;
   overflow: hidden;
 
   .profile-image {
@@ -55,37 +55,34 @@
 .section-tag {
   color: var(--tertiary-color);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
   display: block;
 }
 
 .section-title {
-  font-size: 2.75rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
-  font-weight: 800;
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  letter-spacing: -0.055em;
+  margin-bottom: 1.25rem;
+  line-height: 1.12;
+  font-weight: 700;
   color: var(--text-color);
-
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
 }
 
 .about-content {
   text-align: left;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
 
 .about-text {
-  font-size: 1.05rem;
+  font-size: 1.03rem;
   color: var(--text-muted);
   line-height: 1.8;
-  margin-bottom: 2rem;
+  margin-bottom: 1.15rem;
   max-width: 550px;
 }
 
@@ -93,32 +90,31 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   width: 100%;
 }
 
 .feature-card {
   padding: 1.5rem;
-  border-radius: 15px;
+  border-radius: 16px;
   display: flex;
   gap: 1.25rem;
   background: var(--card-bg);
   border: 1px solid var(--glass-border);
   transition: var(--transition-smooth);
-  opacity: 1 !important;
-  visibility: visible !important;
+  will-change: transform;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     border-color: var(--accent-color);
-    background: rgba(244, 208, 111, 0.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
+    background: color-mix(in srgb, var(--accent-color) 5%, var(--card-bg));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
   }
 
   .feature-icon-box {
     width: 45px;
     height: 45px;
-    background: rgba(244, 208, 111, 0.1);
+    background: color-mix(in srgb, var(--accent-color) 12%, var(--card-bg));
     border-radius: 10px;
     display: flex;
     justify-content: center;
