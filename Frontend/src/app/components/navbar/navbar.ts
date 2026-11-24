@@ -19,6 +19,7 @@ export class Navbar {
   isScrolled = signal(false);
   isMenuOpen = signal(false);
   isDarkMode = signal(false);
+  private audioContext?: AudioContext;
 
   constructor() {
     const savedTheme = localStorage.getItem('portfolio-theme');
@@ -44,6 +45,7 @@ export class Navbar {
 
   toggleTheme(event: MouseEvent) {
     const nextIsDark = !this.isDarkMode();
+    this.playThemeSwitchSound(nextIsDark);
     const root = document.documentElement;
     const button = event.currentTarget instanceof HTMLElement ? event.currentTarget : null;
     const bounds = button?.getBoundingClientRect();
@@ -69,6 +71,38 @@ export class Navbar {
     }
 
     this.setTheme(nextIsDark);
+  }
+
+  private playThemeSwitchSound(isDark: boolean) {
+    try {
+      this.audioContext ??= new AudioContext();
+      const context = this.audioContext;
+      if (context.state === 'suspended') void context.resume();
+
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      const start = context.currentTime;
+      const endFrequency = isDark ? 430 : 760;
+
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(isDark ? 690 : 470, start);
+      oscillator.frequency.exponentialRampToValueAtTime(endFrequency, start + 0.14);
+
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.035, start + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.17);
+
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(start);
+      oscillator.stop(start + 0.18);
+      oscillator.onended = () => {
+        oscillator.disconnect();
+        gain.disconnect();
+      };
+    } catch {
+      // Theme switching should still work when audio is unavailable.
+    }
   }
 
   private setTheme(isDark: boolean) {
